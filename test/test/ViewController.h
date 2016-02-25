@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MPDashBoardBottomView.h"
 
 @interface ViewController : UIViewController
 
+@property (weak, nonatomic) IBOutlet MPDashBoardBottomView *bottomView;
 
 @end
 
