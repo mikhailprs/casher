@@ -7,11 +7,12 @@
 //
 
 #import "MPAddingTransactViewController.h"
+#import "Companion+CoreDataProperties.h"
+#import "Transaction+CoreDataProperties.h"
 
 @interface MPAddingTransactViewController ()
 
 @property (strong, nonatomic) NSManagedObjectContext *context;
-
 
 @end
 
@@ -26,6 +27,29 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
+#pragma mark - init methods
+
+
+
+
+
+#pragma mark - setters and getters
+
+- (NSManagedObjectContext *)context{
+    if (!_context){
+        id delegate = [[UIApplication sharedApplication] delegate];
+        _context = [delegate managedObjectContext];
+    }
+    return _context;
+}
+
+- (void)clickedSaveButton{
+    Transaction *transaction = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([Transaction class]) inManagedObjectContext:self.context];
+    
+}
+
 
 /*
 #pragma mark - Navigation
