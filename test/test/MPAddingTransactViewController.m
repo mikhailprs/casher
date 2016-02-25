@@ -20,6 +20,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self addNewTransaction];
     // Do any additional setup after loading the view.
 }
 
@@ -45,11 +46,44 @@
     return _context;
 }
 
-- (void)clickedSaveButton{
+- (Transaction *)addNewTransaction{
     Transaction *transaction = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([Transaction class]) inManagedObjectContext:self.context];
-    
+    transaction.trans_amount = [NSNumber numberWithDouble:200];
+    return transaction;
 }
 
+- (Companion *)addNewCompanion{
+    Companion *companion = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([Companion class]) inManagedObjectContext:self.context];
+    companion.comp_name = @"Mukola";
+    return companion;
+}
+
+- (NSArray *)getAllObjects {
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSEntityDescription *description = [NSEntityDescription entityForName:@"Transaction" inManagedObjectContext:self.context];
+    [request setEntity:description];
+    NSError *requestError = nil;
+    NSArray *resultArray = [self.context executeFetchRequest:request error:&requestError];
+    if (requestError){
+        NSLog(@"%@",[requestError localizedDescription]);
+    }
+    return resultArray;
+}
+
+- (void)printAllObject {
+    NSArray *allObject = [self getAllObjects];
+    for (id object in allObject){
+        [self.context deleteObject:object];
+    }
+    [self.context save:nil];
+}
+
+- (void)thingsForAdding{
+    
+    Companion *companion = [self addNewCompanion];
+    Transaction *transact = [self addNewTransaction];
+
+}
 
 /*
 #pragma mark - Navigation
