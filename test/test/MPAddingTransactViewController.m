@@ -20,7 +20,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self addNewTransaction];
+    [self savePerson];
+    [self printAllObjects];
+    [self deleteAllObjects];
+    
     // Do any additional setup after loading the view.
 }
 
@@ -70,12 +73,19 @@
     return resultArray;
 }
 
-- (void)printAllObject {
+- (void)deleteAllObjects {
     NSArray *allObject = [self getAllObjects];
     for (id object in allObject){
         [self.context deleteObject:object];
     }
     [self.context save:nil];
+}
+
+- (void)printAllObjects {
+    NSArray *allObject = [self getAllObjects];
+    for (id object in allObject){
+        NSLog(@"%@",object);
+    }
 }
 
 - (void)thingsForAdding{
@@ -84,6 +94,17 @@
     Transaction *transact = [self addNewTransaction];
 
 }
+
+- (void)savePerson{
+    Transaction *tr = [self addNewTransaction];
+    Companion *comp = [self addNewCompanion];
+    [tr addCompanionObject:comp];
+    [self.context insertObject:tr];
+    [self.context save:nil];
+}
+
+
+
 
 /*
 #pragma mark - Navigation
