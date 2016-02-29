@@ -11,7 +11,8 @@
 
 @interface ViewController : UIViewController
 
-@property (weak, nonatomic) IBOutlet MPDashBoardBottomView *bottomView;
+@property (strong, nonatomic) MPDashBoardBottomView *bottomView;
+@property (weak,   nonatomic) IBOutlet UIView *view_container;
 
 @end
 

@@ -29,7 +29,10 @@
 
 - (void)setup{
     _lbl_left = [[UILabel alloc] init];
+    _lbl_left.textAlignment = NSTextAlignmentLeft;
+
     _lbl_right = [[UILabel alloc] init];
+    _lbl_right.textAlignment = NSTextAlignmentRight;
     self.translatesAutoresizingMaskIntoConstraints = NO;
     UIView *leftSubview = [[UIView alloc] initWithFrame:CGRectZero];
     [leftSubview addSubview:self.lbl_left];

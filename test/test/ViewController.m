@@ -7,6 +7,8 @@
 //
 
 #import "ViewController.h"
+#import "MPStatisticView.h"
+#import <Masonry/Masonry.h>
 
 @interface ViewController () <MPDashBoardBottomViewDelegate>
 
@@ -16,7 +18,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.bottomView setBottomViewDelegate:self];
+    [self makeUI];
+    [self makeConstraints];
+    [self initViews];
+    
     // Do any additional setup after loading the view, typically from a nib.
 }
 
@@ -24,6 +29,46 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+- (void)initViews{
+    MPStatisticView *available = [[MPStatisticView alloc] init];
+    UIView *view = self.view_container;
+    [view addSubview:available];
+    [available mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.left.equalTo(view);
+        make.top.equalTo(view.mas_top).with.offset(60.f);
+        make.height.equalTo(@(available.defaultHeight));
+    }];
+    [view bringSubviewToFront:available];
+    available.lbl_left.text = @"Zaporizh_Kirovograd_Mukolos";
+    available.lbl_right.text = @"123121231231233";
+}
+
+- (void)initBottomCollectionView{
+    UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
+    [flowLayout setItemSize:CGSizeMake(50, 50)];
+    [flowLayout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
+    flowLayout.minimumInteritemSpacing = 1.0f;
+    _bottomView = [[MPDashBoardBottomView alloc] initWithFrame:CGRectZero collectionViewLayout:flowLayout];
+    _bottomView.bottomViewDelegate = self;
+    
+    [self.view_container addSubview:_bottomView];
+}
+
+- (void)makeConstraints{
+    [self bottomCollectionConstraints];
+}
+- (void)makeUI{
+    [self initBottomCollectionView];
+}
+
+- (void)bottomCollectionConstraints{
+    [self.bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.left.right.equalTo(self.view_container).with.offset(0.f);
+        make.height.equalTo(@50.f);
+    }];
+}
+
 
 
 

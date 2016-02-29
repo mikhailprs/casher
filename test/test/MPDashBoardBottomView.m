@@ -23,33 +23,39 @@ static NSString *const cellIdentifier = @"dashboardBottomCollectionViewCell";
 
 #pragma mark - init methods
 
-- (instancetype)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
+//- (instancetype)initWithFrame:(CGRect)frame
+//{
+//    self = [super initWithFrame:frame];
+//    if (self) {
+//        [self creator];
+//    }
+//    return self;
+//}
+
+//- (instancetype)initWithCoder:(NSCoder *)aDecoder{
+//    self = [super initWithCoder:aDecoder];
+//    if (self) {
+//        [self creator];
+//    }
+//    return self;
+//}
+- (instancetype)initWithFrame:(CGRect)frame collectionViewLayout:(UICollectionViewLayout *)layout{
+    self = [super initWithFrame:frame collectionViewLayout:layout];
+    if (self){
         [self creator];
     }
     return self;
 }
-
-- (instancetype)initWithCoder:(NSCoder *)aDecoder{
-    self = [super initWithCoder:aDecoder];
-    if (self) {
-        [self creator];
-    }
-    return self;
-}
-
 - (void)creator{
     _cellSize = CGSizeZero;
     [self setUserInteractionEnabled:YES];
     [self setDelegate:self];
-    [self setDataSource:self];;
+    [self setDataSource:self];
     [self registerNib:[UINib nibWithNibName:@"MPDashboardBottomCellCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:cellIdentifier];
     [self setShowsHorizontalScrollIndicator:NO];
     [self setShowsVerticalScrollIndicator:NO];
     [self setBackgroundColor:[UIColor colorWithWhite:0.667 alpha:0.05f]];
-    [self initFlowLayout];
+//    [self initFlowLayout];
 }
 
 - (void)initFlowLayout{
