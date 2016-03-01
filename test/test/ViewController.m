@@ -16,61 +16,83 @@
 
 @implementation ViewController
 
+
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self makeUI];
     [self makeConstraints];
-    [self initViews];
+    [self initDelegates];
+    [self initHardCode];
     
     // Do any additional setup after loading the view, typically from a nib.
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-- (void)initViews{
-    MPStatisticView *available = [[MPStatisticView alloc] init];
-    UIView *view = self.view_container;
-    [view addSubview:available];
-    [available mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.left.equalTo(view);
-        make.top.equalTo(view.mas_top).with.offset(60.f);
-        make.height.equalTo(@(available.defaultHeight));
-    }];
-    [view bringSubviewToFront:available];
-    available.lbl_left.text = @"Zaporizh_Kirovograd_Mukolos";
-    available.lbl_right.text = @"123121231231233";
+
+#pragma mark - init methods
+
+
+- (void)makeUI {
+    [self initBottomCollectionView];
+    [self initAvailableView];
 }
 
 - (void)initBottomCollectionView{
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    [flowLayout setItemSize:CGSizeMake(50, 50)];
-    [flowLayout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
-    flowLayout.minimumInteritemSpacing = 1.0f;
     _bottomView = [[MPDashBoardBottomView alloc] initWithFrame:CGRectZero collectionViewLayout:flowLayout];
-    _bottomView.bottomViewDelegate = self;
-    
     [self.view_container addSubview:_bottomView];
 }
 
-- (void)makeConstraints{
-    [self bottomCollectionConstraints];
-}
-- (void)makeUI{
-    [self initBottomCollectionView];
-}
-
-- (void)bottomCollectionConstraints{
-    [self.bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.left.right.equalTo(self.view_container).with.offset(0.f);
-        make.height.equalTo(@50.f);
+- (void)initAvailableView{
+    _view_avialable = [[MPStatisticView alloc] init];
+    UIView *view = self.view_container;
+    [self.view_container addSubview:self.view_avialable];
+    [self.view_avialable mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(view).with.offset(30.f);
+        make.right.equalTo(view.mas_right).with.offset(-30.f);
+        make.top.equalTo(view.mas_top).with.offset(30.f);
+        make.height.equalTo(@(self.view_avialable.defaultHeight));
     }];
 }
 
 
 
+#pragma mark - init constraints
+
+- (void)makeConstraints{
+    [self bottomCollectionConstraints];
+}
+
+- (void)bottomCollectionConstraints{
+    [self.bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.equalTo(self.view_container).with.offset(0.f);
+        make.height.equalTo(@85.f);
+        make.bottom.equalTo(self.view_container.mas_bottom).with.offset(-50.f);
+    }];
+}
+
+
+#pragma init delegate and settings
+
+- (void)initDelegates{
+    self.bottomView.bottomViewDelegate = self;
+    self.automaticallyAdjustsScrollViewInsets = NO;  // для автоматической подстройки ячеек collection view
+    [self.navigationItem setTitle:@"Balances"];
+}
+
+#pragma mark - common methods
+
+- (void)initHardCode{
+    self.view_avialable.lbl_left.text = @"Available:";
+    self.view_avialable.lbl_right.text = @"1234$";
+}
 
 #pragma mark - MPDashBoardBottomViewDelegate
 

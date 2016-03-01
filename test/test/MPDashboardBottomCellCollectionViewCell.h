@@ -22,8 +22,8 @@ typedef NS_ENUM(NSInteger, MPBottomTypeCellEnum) {
 @interface MPDashboardBottomCellCollectionViewCell : UICollectionViewCell
 
 
-@property (weak, nonatomic) IBOutlet UILabel *lbl_name;
-@property (assign, nonatomic) MPBottomTypeCellEnum typeCell;
+@property (weak,   nonatomic) IBOutlet UILabel *lbl_name;
+@property (assign, nonatomic) MPBottomTypeCellEnum  typeCell;
 
 
 @end
