@@ -9,20 +9,23 @@
 #import "MPAddingTransactViewController.h"
 #import "Companion+CoreDataProperties.h"
 #import "Transaction+CoreDataProperties.h"
-
+#import "MPInputTextView.h"
+#import <Masonry/Masonry.h>
 @interface MPAddingTransactViewController ()
 
 @property (strong, nonatomic) NSManagedObjectContext *context;
-
+@property (strong, nonatomic) MPInputTextView *view_input;
 @end
 
 @implementation MPAddingTransactViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor whiteColor];
     [self savePerson];
     [self printAllObjects];
     [self deleteAllObjects];
+    [self createInputView];
     
     // Do any additional setup after loading the view.
 }
@@ -35,7 +38,15 @@
 
 #pragma mark - init methods
 
-
+- (void)createInputView{
+    _view_input = [[MPInputTextView alloc] init];
+    [self.view addSubview:self.view_input];
+    [self.view_input mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.equalTo(self.view).with.offset(0.f);
+        make.top.equalTo(self.view.mas_top).with.offset(70.f);
+        make.height.equalTo(@(50.f));
+    }];
+}
 
 
 

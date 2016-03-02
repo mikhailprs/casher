@@ -24,6 +24,7 @@
 		546747121C7EFFC000113990 /* MPDashboardBottomCellCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 546747101C7EFFC000113990 /* MPDashboardBottomCellCollectionViewCell.m */; };
 		546747131C7EFFC000113990 /* MPDashboardBottomCellCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 546747111C7EFFC000113990 /* MPDashboardBottomCellCollectionViewCell.xib */; };
 		546747191C7F2B5100113990 /* MPAddingTransactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 546747181C7F2B5100113990 /* MPAddingTransactViewController.m */; };
+		C2E300FE1C879E8F00285584 /* MPInputTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = C2E300FD1C879E8F00285584 /* MPInputTextView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +59,8 @@
 		546747181C7F2B5100113990 /* MPAddingTransactViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPAddingTransactViewController.m; sourceTree = "<group>"; };
 		6DA6664E7D2064BBB91E190C /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		8E5AFD792099C1CB57AAF077 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		C2E300FC1C879E8F00285584 /* MPInputTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPInputTextView.h; sourceTree = "<group>"; };
+		C2E300FD1C879E8F00285584 /* MPInputTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPInputTextView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -156,6 +159,7 @@
 		546747161C7F09E300113990 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				C2E300FB1C8795C000285584 /* TransactionVies */,
 				546747061C7EFC2300113990 /* MPDashBoardBottomView.h */,
 				546747071C7EFC2300113990 /* MPDashBoardBottomView.m */,
 				543A02831C80901800305903 /* MPStatisticView.h */,
@@ -179,6 +183,15 @@
 				6DA6664E7D2064BBB91E190C /* Pods.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		C2E300FB1C8795C000285584 /* TransactionVies */ = {
+			isa = PBXGroup;
+			children = (
+				C2E300FC1C879E8F00285584 /* MPInputTextView.h */,
+				C2E300FD1C879E8F00285584 /* MPInputTextView.m */,
+			);
+			name = TransactionVies;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -312,6 +325,7 @@
 				546746D81C7EEF6B00113990 /* AppDelegate.m in Sources */,
 				546746D51C7EEF6B00113990 /* main.m in Sources */,
 				543A02851C80901800305903 /* MPStatisticView.m in Sources */,
+				C2E300FE1C879E8F00285584 /* MPInputTextView.m in Sources */,
 				546747041C7EF4DF00113990 /* Companion+CoreDataProperties.m in Sources */,
 				546747021C7EF4DF00113990 /* Transaction+CoreDataProperties.m in Sources */,
 				546747121C7EFFC000113990 /* MPDashboardBottomCellCollectionViewCell.m in Sources */,
