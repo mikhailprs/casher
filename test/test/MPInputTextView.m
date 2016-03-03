@@ -56,7 +56,7 @@
 - (void)makeUI{
     _lbl_titile = [[UILabel alloc] init];
     _tf_amount = [[UITextField alloc] init];
-    self.tf_amount.backgroundColor = [UIColor blueColor];
+    self.tf_amount.backgroundColor = [UIColor grayColor];
     [self addSubview:self.lbl_titile];
     [self addSubview:self.tf_amount];
     self.lbl_titile.text = @"Enter Amount";
@@ -65,7 +65,8 @@
 - (void)makeConstraints{
     [self.lbl_titile mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.bottom.left.equalTo(self).with.offset(0.f);
-        make.right.equalTo(self.tf_amount.mas_left).with.offset(-10.f);
+        make.right.equalTo(self.tf_amount.mas_left).with.offset(0.f);
+        make.width.equalTo(self.tf_amount.mas_width).with.offset(0.f);
     }];
     
     [self.tf_amount mas_makeConstraints:^(MASConstraintMaker *make) {

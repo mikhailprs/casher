@@ -24,6 +24,8 @@
 		546747121C7EFFC000113990 /* MPDashboardBottomCellCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 546747101C7EFFC000113990 /* MPDashboardBottomCellCollectionViewCell.m */; };
 		546747131C7EFFC000113990 /* MPDashboardBottomCellCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 546747111C7EFFC000113990 /* MPDashboardBottomCellCollectionViewCell.xib */; };
 		546747191C7F2B5100113990 /* MPAddingTransactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 546747181C7F2B5100113990 /* MPAddingTransactViewController.m */; };
+		C225D8121C88DE9E00B933FF /* MPLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C225D8111C88DE9E00B933FF /* MPLocationManager.m */; };
+		C225D8151C88E5EF00B933FF /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C225D8131C88E46600B933FF /* CoreLocation.framework */; };
 		C2E300FE1C879E8F00285584 /* MPInputTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = C2E300FD1C879E8F00285584 /* MPInputTextView.m */; };
 /* End PBXBuildFile section */
 
@@ -59,6 +61,9 @@
 		546747181C7F2B5100113990 /* MPAddingTransactViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPAddingTransactViewController.m; sourceTree = "<group>"; };
 		6DA6664E7D2064BBB91E190C /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		8E5AFD792099C1CB57AAF077 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		C225D8101C88DE9E00B933FF /* MPLocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPLocationManager.h; sourceTree = "<group>"; };
+		C225D8111C88DE9E00B933FF /* MPLocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPLocationManager.m; sourceTree = "<group>"; };
+		C225D8131C88E46600B933FF /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		C2E300FC1C879E8F00285584 /* MPInputTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPInputTextView.h; sourceTree = "<group>"; };
 		C2E300FD1C879E8F00285584 /* MPInputTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPInputTextView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -68,6 +73,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C225D8151C88E5EF00B933FF /* CoreLocation.framework in Frameworks */,
 				4EA244C646BEDB8F693D5239 /* Pods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -96,6 +102,7 @@
 		546746D21C7EEF6B00113990 /* test */ = {
 			isa = PBXGroup;
 			children = (
+				C225D80F1C88DE8300B933FF /* Helpers */,
 				546746F91C7EF4BC00113990 /* CoreData Entities */,
 				546747141C7F09A400113990 /* xib */,
 				546747151C7F09CB00113990 /* cells */,
@@ -171,6 +178,7 @@
 		A440F6C968CEEE492059A56F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C225D8131C88E46600B933FF /* CoreLocation.framework */,
 				0589BAD814142B5A8D775AA3 /* Pods.framework */,
 			);
 			name = Frameworks;
@@ -183,6 +191,15 @@
 				6DA6664E7D2064BBB91E190C /* Pods.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		C225D80F1C88DE8300B933FF /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				C225D8101C88DE9E00B933FF /* MPLocationManager.h */,
+				C225D8111C88DE9E00B933FF /* MPLocationManager.m */,
+			);
+			name = Helpers;
 			sourceTree = "<group>";
 		};
 		C2E300FB1C8795C000285584 /* TransactionVies */ = {
@@ -323,6 +340,7 @@
 				546746E11C7EEF6B00113990 /* test.xcdatamodeld in Sources */,
 				546747191C7F2B5100113990 /* MPAddingTransactViewController.m in Sources */,
 				546746D81C7EEF6B00113990 /* AppDelegate.m in Sources */,
+				C225D8121C88DE9E00B933FF /* MPLocationManager.m in Sources */,
 				546746D51C7EEF6B00113990 /* main.m in Sources */,
 				543A02851C80901800305903 /* MPStatisticView.m in Sources */,
 				C2E300FE1C879E8F00285584 /* MPInputTextView.m in Sources */,
