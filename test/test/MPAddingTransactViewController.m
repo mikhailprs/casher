@@ -11,6 +11,7 @@
 #import "Transaction+CoreDataProperties.h"
 #import "MPInputTextView.h"
 #import <Masonry/Masonry.h>
+#import "MPLocationManager.h"
 @interface MPAddingTransactViewController ()
 
 @property (strong, nonatomic) NSManagedObjectContext *context;
@@ -26,7 +27,7 @@
     [self printAllObjects];
     [self deleteAllObjects];
     [self createInputView];
-    
+    [MPLocationManager sharedLocationManager];
     // Do any additional setup after loading the view.
 }
 

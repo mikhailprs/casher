@@ -8,7 +8,7 @@
 
 #import "MPLocationManager.h"
 #import <CoreLocation/CoreLocation.h>
-@interface MPLocationManager ()
+@interface MPLocationManager () <CLLocationManagerDelegate>
 
 @property (strong, nonatomic)  CLLocationManager *locationManager;
 
@@ -26,8 +26,34 @@
 }
 
 - (id)initSingleton{
-    
+    if ([self.locationManager respondsToSelector:@selector(requestAlwaysAuthorization)])
+    {
+        [self.locationManager requestAlwaysAuthorization];
+    }
+    [self.locationManager startUpdatingLocation];
     return self;
 }
 
+
+#pragma mark - setters and getters
+
+- (CLLocationManager *)locationManager{
+    if(!_locationManager){
+        _locationManager = [[CLLocationManager alloc] init];
+        _locationManager.delegate = self;
+        _locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    }
+    return _locationManager;
+}
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
+{   CLLocation *loca = [locations firstObject];
+    CLGeocoder *geoCoder = [[CLGeocoder alloc] init];
+    [geoCoder reverseGeocodeLocation:loca completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
+        CLPlacemark * myPlacemark = [placemarks firstObject];
+        
+        NSLog(@"%@ | %@ | %@ ",myPlacemark.name,myPlacemark.subAdministrativeArea,myPlacemark.subLocality);
+    }];
+  
+}
 @end
