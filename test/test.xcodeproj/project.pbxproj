@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		390D98AAD9DDA0C637DEB206 /* libPods-test.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 92E6BF731A0708A84DDB3324 /* libPods-test.a */; };
 		543A02851C80901800305903 /* MPStatisticView.m in Sources */ = {isa = PBXBuildFile; fileRef = 543A02841C80901800305903 /* MPStatisticView.m */; };
 		546746D51C7EEF6B00113990 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 546746D41C7EEF6B00113990 /* main.m */; };
 		546746D81C7EEF6B00113990 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 546746D71C7EEF6B00113990 /* AppDelegate.m */; };
@@ -76,7 +75,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C225D8151C88E5EF00B933FF /* CoreLocation.framework in Frameworks */,
-				390D98AAD9DDA0C637DEB206 /* libPods-test.a in Frameworks */,
 				A1C1432C33C31E9B02CC4D51 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
