@@ -26,6 +26,7 @@
 		A1C1432C33C31E9B02CC4D51 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C3F2D01B2EAA598E1851CDF /* libPods.a */; };
 		C225D8121C88DE9E00B933FF /* MPLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C225D8111C88DE9E00B933FF /* MPLocationManager.m */; };
 		C225D8151C88E5EF00B933FF /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C225D8131C88E46600B933FF /* CoreLocation.framework */; };
+		C22769251C8E44A0002359B3 /* MPTransactionsHistoryVIewControllerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C22769241C8E44A0002359B3 /* MPTransactionsHistoryVIewControllerViewController.m */; };
 		C2E300FE1C879E8F00285584 /* MPInputTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = C2E300FD1C879E8F00285584 /* MPInputTextView.m */; };
 /* End PBXBuildFile section */
 
@@ -65,6 +66,8 @@
 		C225D8101C88DE9E00B933FF /* MPLocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPLocationManager.h; sourceTree = "<group>"; };
 		C225D8111C88DE9E00B933FF /* MPLocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPLocationManager.m; sourceTree = "<group>"; };
 		C225D8131C88E46600B933FF /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		C22769231C8E44A0002359B3 /* MPTransactionsHistoryVIewControllerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPTransactionsHistoryVIewControllerViewController.h; sourceTree = "<group>"; };
+		C22769241C8E44A0002359B3 /* MPTransactionsHistoryVIewControllerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPTransactionsHistoryVIewControllerViewController.m; sourceTree = "<group>"; };
 		C2E300FC1C879E8F00285584 /* MPInputTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPInputTextView.h; sourceTree = "<group>"; };
 		C2E300FD1C879E8F00285584 /* MPInputTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPInputTextView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -113,6 +116,8 @@
 				546746D91C7EEF6B00113990 /* ViewController.h */,
 				546746DA1C7EEF6B00113990 /* ViewController.m */,
 				546746DC1C7EEF6B00113990 /* Main.storyboard */,
+				C22769231C8E44A0002359B3 /* MPTransactionsHistoryVIewControllerViewController.h */,
+				C22769241C8E44A0002359B3 /* MPTransactionsHistoryVIewControllerViewController.m */,
 				546747171C7F2B5100113990 /* MPAddingTransactViewController.h */,
 				546747181C7F2B5100113990 /* MPAddingTransactViewController.m */,
 				546746E21C7EEF6B00113990 /* Assets.xcassets */,
@@ -348,6 +353,7 @@
 				C2E300FE1C879E8F00285584 /* MPInputTextView.m in Sources */,
 				546747041C7EF4DF00113990 /* Companion+CoreDataProperties.m in Sources */,
 				546747021C7EF4DF00113990 /* Transaction+CoreDataProperties.m in Sources */,
+				C22769251C8E44A0002359B3 /* MPTransactionsHistoryVIewControllerViewController.m in Sources */,
 				546747121C7EFFC000113990 /* MPDashboardBottomCellCollectionViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

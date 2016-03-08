@@ -52,11 +52,40 @@
                     <connections>
                         <outlet property="view_container" destination="eft-4T-44p" id="gaL-mq-eiS"/>
                         <segue destination="yyg-7l-Zj3" kind="show" identifier="adding_transaction" id="38p-Wj-CjQ"/>
+                        <segue destination="bau-d0-uVT" kind="show" identifier="history" id="62z-Fe-1yJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-8" y="369"/>
+        </scene>
+        <!--Transactions HistoryV Iew Controller View Controller-->
+        <scene sceneID="u5Z-H6-xjg">
+            <objects>
+                <tableViewController id="bau-d0-uVT" customClass="MPTransactionsHistoryVIewControllerViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="vfe-LU-2GZ">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="r0b-L1-2F0">
+                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="r0b-L1-2F0" id="kFv-ty-Pvn">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="bau-d0-uVT" id="9ga-Ll-R0q"/>
+                            <outlet property="delegate" destination="bau-d0-uVT" id="v7L-qT-ax0"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xrf-H9-dyV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1011" y="-420"/>
         </scene>
         <!--Adding Transact View Controller-->
         <scene sceneID="owI-iS-0tj">
@@ -74,7 +103,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FXL-LH-LVi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="701" y="364"/>
+            <point key="canvasLocation" x="1017" y="369"/>
         </scene>
     </scenes>
 </document>

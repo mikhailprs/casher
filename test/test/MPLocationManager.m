@@ -49,10 +49,12 @@
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {   CLLocation *loca = [locations firstObject];
     CLGeocoder *geoCoder = [[CLGeocoder alloc] init];
+    __weak typeof (self) wSelf = self;
     [geoCoder reverseGeocodeLocation:loca completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
         CLPlacemark * myPlacemark = [placemarks firstObject];
-        
-        NSLog(@"%@ | %@ | %@ ",myPlacemark.name,myPlacemark.subAdministrativeArea,myPlacemark.subLocality);
+        wSelf.locationFinder(myPlacemark.name,myPlacemark.subAdministrativeArea);
+        [wSelf.locationManager stopUpdatingLocation];
+//        NSLog(@"%@ | %@ | %@ ",myPlacemark.name,myPlacemark.subAdministrativeArea,myPlacemark.subLocality);
     }];
   
 }

@@ -105,7 +105,7 @@
 //            [self performSegueWithIdentifier:@"push_to_favorites" sender:collectionView];
             break;}
         case OPTKBottomTypeCellOpenTrades:{
-//            [self performSegueWithIdentifier:@"push_to_open_trades" sender:collectionView];
+            [self performSegueWithIdentifier:@"history" sender:collectionView];
              NSLog(@"%ld",(long)indexPath.row);
             break;}
         case OPTKBottomTypeCellClosedTrades:{

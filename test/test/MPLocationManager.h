@@ -8,7 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
+typedef void (^locationFinderBlock)(NSString* city, NSString* zone);
 @interface MPLocationManager : NSObject
 
 + (id)sharedLocationManager;
+
+@property (copy, nonatomic) locationFinderBlock locationFinder;
+
 @end
