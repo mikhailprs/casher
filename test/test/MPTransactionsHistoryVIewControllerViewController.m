@@ -11,16 +11,19 @@
 #import <CoreData/CoreData.h>
 #import "Companion+CoreDataProperties.h"
 #import "Transaction+CoreDataProperties.h"
-
+#import "MPTransactionHistoryCell.h"
+#import "MPExtension.h"
 
 @interface MPTransactionsHistoryVIewControllerViewController () <NSFetchedResultsControllerDelegate>
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
+@property (strong, nonatomic) NSArray *arrayOfTypes;
 
 @end
 
 @implementation MPTransactionsHistoryVIewControllerViewController
 
+static NSString *const cellHistoryIdentifier = @"transactionHistoryIdentifier";
 //@synthesize fetchedResultsController = _fetchedResultsController;
 
 - (void)viewDidLoad {
@@ -31,6 +34,7 @@
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         // Fail
     }
+    [self.tableView registerNib:[UINib nibWithNibName:@"MPTransactionHistoryCell" bundle:nil] forCellReuseIdentifier:cellHistoryIdentifier];
 //    [self deleteAllObjects];
     
     // Do any additional setup after loading the view.
@@ -100,10 +104,9 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    static NSString *CellIdentifier = @"Cell";
     
-    UITableViewCell *cell =
-    [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    MPTransactionHistoryCell *cell =
+    [tableView dequeueReusableCellWithIdentifier:cellHistoryIdentifier];
     
     // Set up the cell...
     [self configureCell:cell atIndexPath:indexPath];
@@ -169,9 +172,16 @@
 #pragma mark - helper methods
 
 
-- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+- (void)configureCell:(MPTransactionHistoryCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     Transaction *transaction = [_fetchedResultsController objectAtIndexPath:indexPath];
-    cell.textLabel.text = [NSString stringWithFormat:@"%@",transaction.trans_amount];
+    cell.lbl_amount.text = [NSString stringWithFormat:@"%@",transaction.trans_amount];
+    cell.lbl_place.text = [NSString stringWithFormat:@"%@",transaction.trans_location];
+    if (!_arrayOfTypes){
+        _arrayOfTypes = [MPExtension getTransactionTypes];
+    }
+    cell.lbl_type.text = [NSString stringWithFormat:@"%@",self.arrayOfTypes[[transaction.trans_type integerValue]]];
+    cell.lbl_time.text = [NSString stringWithFormat:@"%@",transaction.trans_time];
+    
 //    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@, %@",
 //                                 info.city, info.state];
 }
@@ -195,7 +205,7 @@
     for (id object in allObject){
         Transaction *trans = object;
         
-        NSLog(@"%@ %@ %@",trans.trans_amount, trans.trans_time, trans.trans_location);
+        NSLog(@"%@ %@ %@ %@",trans.trans_amount, trans.trans_time, trans.trans_location, trans.trans_type);
     }
 }
 

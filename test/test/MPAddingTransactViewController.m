@@ -13,6 +13,7 @@
 #import <Masonry/Masonry.h>
 #import "MPLocationManager.h"
 #import "MPTransTypeSwitcherView.h"
+#import "MPExtension.h"
 
 @interface MPAddingTransactViewController () <OPTKTransactionTypeSwitchesViewProtocol>
 
@@ -22,9 +23,15 @@
 @property (strong, nonatomic) NSString *street;
 @property (strong, nonatomic) dispatch_queue_t queueSerial;
 @property (strong, nonatomic) MPTransTypeSwitcherView *view_typeSwitch;
+@property (strong, nonatomic) NSArray *arrayWithTypes;
+@property (assign, nonatomic) MPTransactionType transactionType;
 @end
 
+
 @implementation MPAddingTransactViewController
+
+
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -33,9 +40,11 @@
     locationManager.locationFinder = ^(NSString *str1 , NSString *str2){
         _street = str1;
     };
+    
     [self makeUI];
     [self makeConstraints];
     [self printAllObjects];
+    [self initDefaultValues];
 //    [self savePerson];
 //    [self printAllObjects];
 //    [self deleteAllObjects];
@@ -58,7 +67,9 @@
 
 #pragma mark - init methods
 
-
+- (void)initDefaultValues{
+    _transactionType = MPVodka;
+}
 
 #pragma mark - init UI
 
@@ -135,6 +146,7 @@
         transaction.trans_amount = [NSNumber numberWithDouble:[self.view_input.tf_amount.text doubleValue]];
         transaction.trans_time = [NSDate date];
         transaction.trans_location = self.street;
+        transaction.trans_type = [NSNumber numberWithInt:self.transactionType];
         [self.context insertObject:transaction];
         [self.context save:nil];
     });
@@ -228,11 +240,10 @@
 #pragma mark - OPTKTransactionTypeSwitchesViewProtocol
 
 - (NSArray *)dataSourceForView{
-//    if (!_orderTypesStrings) {
-//        _orderTypesStrings = @[ [self.localizationManager getCurrentLocalizedStringForKey:@"cfd_investment_view_controller_limit"],
-//                                [self.localizationManager getCurrentLocalizedStringForKey:@"cfd_investment_view_controller_stop"]];
-//    }
-    return @[@"vodka", @"pivo", @"sluts"];
+    if (!_arrayWithTypes) {
+        _arrayWithTypes = [MPExtension getTransactionTypes];
+    }
+    return _arrayWithTypes;
 
 }
 - (UIViewController *)viewControllerForPresenter{
@@ -243,6 +254,7 @@
 }
 - (void)transactionTypeSwitcherView:(MPTransTypeSwitcherView *)view didSelectedValueAtIndex:(NSInteger)idx{
     NSLog(@"%ld",(long)idx);
+    _transactionType = (MPTransactionType)idx;
 }
 
 

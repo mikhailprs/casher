@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		543A02851C80901800305903 /* MPStatisticView.m in Sources */ = {isa = PBXBuildFile; fileRef = 543A02841C80901800305903 /* MPStatisticView.m */; };
 		544A83921C9172E30082275E /* MPTransTypeSwitcherView.m in Sources */ = {isa = PBXBuildFile; fileRef = 544A83911C9172E30082275E /* MPTransTypeSwitcherView.m */; };
+		544A83951C91AAEE0082275E /* MPExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 544A83941C91AAEE0082275E /* MPExtension.m */; };
+		544A83991C91B4A90082275E /* MPTransactionHistoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 544A83971C91B4A90082275E /* MPTransactionHistoryCell.m */; };
+		544A839A1C91B4A90082275E /* MPTransactionHistoryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 544A83981C91B4A90082275E /* MPTransactionHistoryCell.xib */; };
 		546746D51C7EEF6B00113990 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 546746D41C7EEF6B00113990 /* main.m */; };
 		546746D81C7EEF6B00113990 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 546746D71C7EEF6B00113990 /* AppDelegate.m */; };
 		546746DB1C7EEF6B00113990 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 546746DA1C7EEF6B00113990 /* ViewController.m */; };
@@ -37,6 +40,11 @@
 		544A838F1C9167810082275E /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		544A83901C9172E30082275E /* MPTransTypeSwitcherView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPTransTypeSwitcherView.h; sourceTree = "<group>"; };
 		544A83911C9172E30082275E /* MPTransTypeSwitcherView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPTransTypeSwitcherView.m; sourceTree = "<group>"; };
+		544A83931C91AAEE0082275E /* MPExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPExtension.h; sourceTree = "<group>"; };
+		544A83941C91AAEE0082275E /* MPExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPExtension.m; sourceTree = "<group>"; };
+		544A83961C91B4A90082275E /* MPTransactionHistoryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPTransactionHistoryCell.h; sourceTree = "<group>"; };
+		544A83971C91B4A90082275E /* MPTransactionHistoryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPTransactionHistoryCell.m; sourceTree = "<group>"; };
+		544A83981C91B4A90082275E /* MPTransactionHistoryCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MPTransactionHistoryCell.xib; sourceTree = "<group>"; };
 		546746D01C7EEF6B00113990 /* test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = test.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		546746D41C7EEF6B00113990 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		546746D61C7EEF6B00113990 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -170,6 +178,9 @@
 			children = (
 				5467470F1C7EFFC000113990 /* MPDashboardBottomCellCollectionViewCell.h */,
 				546747101C7EFFC000113990 /* MPDashboardBottomCellCollectionViewCell.m */,
+				544A83961C91B4A90082275E /* MPTransactionHistoryCell.h */,
+				544A83971C91B4A90082275E /* MPTransactionHistoryCell.m */,
+				544A83981C91B4A90082275E /* MPTransactionHistoryCell.xib */,
 			);
 			name = cells;
 			sourceTree = "<group>";
@@ -210,6 +221,8 @@
 			children = (
 				C225D8101C88DE9E00B933FF /* MPLocationManager.h */,
 				C225D8111C88DE9E00B933FF /* MPLocationManager.m */,
+				544A83931C91AAEE0082275E /* MPExtension.h */,
+				544A83941C91AAEE0082275E /* MPExtension.m */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -287,6 +300,7 @@
 			files = (
 				546747131C7EFFC000113990 /* MPDashboardBottomCellCollectionViewCell.xib in Resources */,
 				546746E61C7EEF6B00113990 /* LaunchScreen.storyboard in Resources */,
+				544A839A1C91B4A90082275E /* MPTransactionHistoryCell.xib in Resources */,
 				546746E31C7EEF6B00113990 /* Assets.xcassets in Resources */,
 				546746DE1C7EEF6B00113990 /* Main.storyboard in Resources */,
 			);
@@ -354,10 +368,12 @@
 				546746E11C7EEF6B00113990 /* test.xcdatamodeld in Sources */,
 				546747191C7F2B5100113990 /* MPAddingTransactViewController.m in Sources */,
 				546746D81C7EEF6B00113990 /* AppDelegate.m in Sources */,
+				544A83951C91AAEE0082275E /* MPExtension.m in Sources */,
 				C225D8121C88DE9E00B933FF /* MPLocationManager.m in Sources */,
 				546746D51C7EEF6B00113990 /* main.m in Sources */,
 				543A02851C80901800305903 /* MPStatisticView.m in Sources */,
 				C2E300FE1C879E8F00285584 /* MPInputTextView.m in Sources */,
+				544A83991C91B4A90082275E /* MPTransactionHistoryCell.m in Sources */,
 				546747041C7EF4DF00113990 /* Companion+CoreDataProperties.m in Sources */,
 				546747021C7EF4DF00113990 /* Transaction+CoreDataProperties.m in Sources */,
 				C22769251C8E44A0002359B3 /* MPTransactionsHistoryVIewControllerViewController.m in Sources */,
