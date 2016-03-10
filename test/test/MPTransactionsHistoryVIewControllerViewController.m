@@ -31,6 +31,7 @@
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         // Fail
     }
+//    [self deleteAllObjects];
     
     // Do any additional setup after loading the view.
 }
@@ -48,14 +49,15 @@
     if (_fetchedResultsController != nil) {
         return _fetchedResultsController;
     }
-    
+    // на сколько понял кеш для search норм использовать когда по буквам поиск
+    [NSFetchedResultsController deleteCacheWithName:@"Root"];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription
                                    entityForName:@"Transaction" inManagedObjectContext:self.managedObjectContext];
     [fetchRequest setEntity:entity];
     
     NSSortDescriptor *sort = [[NSSortDescriptor alloc]
-                              initWithKey:@"trans_time" ascending:NO];
+                              initWithKey:@"trans_amount" ascending:NO];
     [fetchRequest setSortDescriptors:[NSArray arrayWithObject:sort]];
     
     [fetchRequest setFetchBatchSize:5];
@@ -83,10 +85,10 @@
 #pragma mark - delegates methods
 
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 1;
-}
+//- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+//{
+//    return 1;
+//}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     id sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
@@ -191,7 +193,17 @@
 - (void)printAllObjects {
     NSArray *allObject = [self getAllObjects];
     for (id object in allObject){
-        NSLog(@"%@",object);
+        Transaction *trans = object;
+        
+        NSLog(@"%@ %@ %@",trans.trans_amount, trans.trans_time, trans.trans_location);
     }
+}
+
+- (void)deleteAllObjects{
+    NSArray *allObject = [self getAllObjects];
+    for (id object in allObject){
+        [self.managedObjectContext deleteObject:object];
+    }
+    [self.managedObjectContext save:nil];
 }
 @end

@@ -12,13 +12,16 @@
 #import "MPInputTextView.h"
 #import <Masonry/Masonry.h>
 #import "MPLocationManager.h"
-@interface MPAddingTransactViewController ()
+#import "MPTransTypeSwitcherView.h"
+
+@interface MPAddingTransactViewController () <OPTKTransactionTypeSwitchesViewProtocol>
 
 @property (strong, nonatomic) NSManagedObjectContext *context;
 @property (strong, nonatomic) MPInputTextView *view_input;
 @property (strong, nonatomic) UIButton *btn_confirmTransaction;
 @property (strong, nonatomic) NSString *street;
 @property (strong, nonatomic) dispatch_queue_t queueSerial;
+@property (strong, nonatomic) MPTransTypeSwitcherView *view_typeSwitch;
 @end
 
 @implementation MPAddingTransactViewController
@@ -62,6 +65,7 @@
 - (void)makeUI{
     [self createInputView];
     [self createTransactionButton];
+    [self createTransTypeSwitcher];
 }
 
 
@@ -79,10 +83,18 @@
     [self.btn_confirmTransaction addTarget:self action:@selector(actionTransaction:) forControlEvents:UIControlEventTouchDown];
 }
 
+- (void)createTransTypeSwitcher{
+    _view_typeSwitch = [[MPTransTypeSwitcherView alloc] init];
+    _view_typeSwitch.leftLabel.text = @"Type:";
+    _view_typeSwitch.typeSwitchesProtocol = self;
+    [self.view addSubview:self.view_typeSwitch];
+}
+
 #pragma mark - init constraints
 
 - (void)makeConstraints{
     [self makeInputViewConstraints];
+    [self makeTransTypeSwitchConstraints];
     [self makeTransactionButtonConstraints];
 }
 
@@ -93,15 +105,26 @@
         make.height.equalTo(@(50.f));
     }];
 }
+- (void)makeTransTypeSwitchConstraints{
+    [self.view_typeSwitch mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.view.mas_left).with.offset(0.f);
+        make.right.equalTo(self.view.mas_right).with.offset(0.f);
+        make.top.equalTo(self.view_input.mas_bottom).with.offset(10.f);
+        make.height.equalTo(@(25.f));
+    }];
+}
 
 - (void)makeTransactionButtonConstraints{
     [self.btn_confirmTransaction mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.view.mas_left).with.offset(50.f);
         make.right.equalTo(self.view.mas_right).with.offset(-50.f);
-        make.top.equalTo(self.view_input.mas_bottom).with.offset(10.f);
+        make.top.equalTo(self.view_typeSwitch.mas_bottom).with.offset(10.f);
         make.height.equalTo(@(25.f));
     }];
 }
+
+
+
 
 
 #pragma mark - IB action
@@ -202,6 +225,25 @@
 }
 
 
+#pragma mark - OPTKTransactionTypeSwitchesViewProtocol
+
+- (NSArray *)dataSourceForView{
+//    if (!_orderTypesStrings) {
+//        _orderTypesStrings = @[ [self.localizationManager getCurrentLocalizedStringForKey:@"cfd_investment_view_controller_limit"],
+//                                [self.localizationManager getCurrentLocalizedStringForKey:@"cfd_investment_view_controller_stop"]];
+//    }
+    return @[@"vodka", @"pivo", @"sluts"];
+
+}
+- (UIViewController *)viewControllerForPresenter{
+    return self;
+}
+- (NSString *)cancelTextForAction{
+    return @"Cancel";
+}
+- (void)transactionTypeSwitcherView:(MPTransTypeSwitcherView *)view didSelectedValueAtIndex:(NSInteger)idx{
+    NSLog(@"%ld",(long)idx);
+}
 
 
 /*
