@@ -28,13 +28,7 @@ static NSString *const cellHistoryIdentifier = @"transactionHistoryIdentifier";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    NSError *error;
-    if (![[self fetchedResultsController] performFetch:&error]) {
-        // Update to handle the error appropriately.
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-        // Fail
-    }
-    [self.tableView registerNib:[UINib nibWithNibName:@"MPTransactionHistoryCell" bundle:nil] forCellReuseIdentifier:cellHistoryIdentifier];
+    [self setup];
 //    [self deleteAllObjects];
     
     // Do any additional setup after loading the view.
@@ -45,6 +39,12 @@ static NSString *const cellHistoryIdentifier = @"transactionHistoryIdentifier";
     // Dispose of any resources that can be recreated.
 }
 
+
+- (void)setup{
+     [self.tableView registerNib:[UINib nibWithNibName:@"MPTransactionHistoryCell" bundle:nil] forCellReuseIdentifier:cellHistoryIdentifier];
+//    [self.tableView setEditing:YES];
+    
+}
 
 #pragma mark - accesors
 
@@ -61,7 +61,7 @@ static NSString *const cellHistoryIdentifier = @"transactionHistoryIdentifier";
     [fetchRequest setEntity:entity];
     
     NSSortDescriptor *sort = [[NSSortDescriptor alloc]
-                              initWithKey:@"trans_amount" ascending:NO];
+                              initWithKey:@"trans_time" ascending:NO];
     [fetchRequest setSortDescriptors:[NSArray arrayWithObject:sort]];
     
     [fetchRequest setFetchBatchSize:5];
@@ -72,6 +72,11 @@ static NSString *const cellHistoryIdentifier = @"transactionHistoryIdentifier";
                                                    cacheName:@"Root"];
     _fetchedResultsController = theFetchedResultsController;
     _fetchedResultsController.delegate = self;
+    NSError *error = nil;
+    if (![_fetchedResultsController performFetch:&error]) {
+       NSLog(@"Failed to initialize FetchedResultsController: %@\n%@", [error localizedDescription], [error userInfo]);
+    }
+
     
     return _fetchedResultsController;
 }
@@ -89,10 +94,10 @@ static NSString *const cellHistoryIdentifier = @"transactionHistoryIdentifier";
 #pragma mark - delegates methods
 
 
-//- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-//{
-//    return 1;
-//}
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return [[[self fetchedResultsController] sections] count];
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     id sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
@@ -169,6 +174,29 @@ static NSString *const cellHistoryIdentifier = @"transactionHistoryIdentifier";
     [self.tableView endUpdates];
 }
 
+
+
+#pragma mark - editing rows
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
+    return YES;
+}
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return UITableViewCellEditingStyleDelete;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    // If row is deleted, remove it from the list.
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        NSManagedObject *task = [self.fetchedResultsController objectAtIndexPath:indexPath];
+        [self.managedObjectContext deleteObject:task];
+        [self.managedObjectContext save:nil];
+//        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    }
+}
+
+
 #pragma mark - helper methods
 
 
@@ -181,9 +209,6 @@ static NSString *const cellHistoryIdentifier = @"transactionHistoryIdentifier";
     }
     cell.lbl_type.text = [NSString stringWithFormat:@"%@",self.arrayOfTypes[[transaction.trans_type integerValue]]];
     cell.lbl_time.text = [NSString stringWithFormat:@"%@",transaction.trans_time];
-    
-//    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@, %@",
-//                                 info.city, info.state];
 }
 
 - (NSArray *)getAllObjects {
