@@ -1,5 +1,5 @@
 //
-//  Companion.h
+//  Earning.h
 //  test
 //
 //  Created by Mikhail Prysiazhniy on 19.03.16.
@@ -9,11 +9,11 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class Transaction;
+@class Balance;
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface Companion : NSManagedObject
+@interface Earning : NSManagedObject
 
 // Insert code here to declare functionality of your managed object subclass
 
@@ -21,4 +21,4 @@ NS_ASSUME_NONNULL_BEGIN
 
 NS_ASSUME_NONNULL_END
 
-#import "Companion+CoreDataProperties.h"
+#import "Earning+CoreDataProperties.h"

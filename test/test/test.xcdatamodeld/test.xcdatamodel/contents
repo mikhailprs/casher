@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9525" systemVersion="15D21" minimumToolsVersion="Automatic">
+    <entity name="Balance" representedClassName="Balance" syncable="YES">
+        <attribute name="amount" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="keeped" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <relationship name="loss" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Transaction" inverseName="lastSpending" inverseEntity="Transaction" syncable="YES"/>
+        <relationship name="profit" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Earning" inverseName="lastGain" inverseEntity="Earning" syncable="YES"/>
+    </entity>
     <entity name="Companion" representedClassName="Companion" syncable="YES">
         <attribute name="comp_debt" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="comp_location" optional="YES" attributeType="String" syncable="YES"/>
@@ -8,15 +14,23 @@
         <attribute name="comp_time" optional="YES" attributeType="Date" syncable="YES"/>
         <relationship name="impressario" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Transaction" inverseName="companion" inverseEntity="Transaction" syncable="YES"/>
     </entity>
+    <entity name="Earning" representedClassName="Earning" syncable="YES">
+        <attribute name="earn_amount" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="earn_date" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="lastGain" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Balance" inverseName="profit" inverseEntity="Balance" syncable="YES"/>
+    </entity>
     <entity name="Transaction" representedClassName="Transaction" syncable="YES">
         <attribute name="trans_amount" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="trans_location" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="trans_time" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="trans_type" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <relationship name="companion" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Companion" inverseName="impressario" inverseEntity="Companion" syncable="YES"/>
+        <relationship name="lastSpending" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Balance" inverseName="loss" inverseEntity="Balance" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Transaction" positionX="-171" positionY="-9" width="128" height="118"/>
         <element name="Companion" positionX="88" positionY="-25" width="128" height="133"/>
+        <element name="Transaction" positionX="-171" positionY="-10" width="128" height="133"/>
+        <element name="Balance" positionX="-360" positionY="-18" width="128" height="103"/>
+        <element name="Earning" positionX="-585" positionY="-9" width="128" height="88"/>
     </elements>
 </model>

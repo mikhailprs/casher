@@ -6,7 +6,7 @@
 //  Copyright © 2016 Michail. All rights reserved.
 //
 
-#import "MPTransactionsHistoryVIewControllerViewController.h"
+#import "MPTransactionsHistoryViewController.h"
 #import <Masonry/Masonry.h>
 #import <CoreData/CoreData.h>
 #import "Companion+CoreDataProperties.h"
@@ -14,14 +14,14 @@
 #import "MPTransactionHistoryCell.h"
 #import "MPExtension.h"
 
-@interface MPTransactionsHistoryVIewControllerViewController () <NSFetchedResultsControllerDelegate>
+@interface MPTransactionsHistoryViewController () <NSFetchedResultsControllerDelegate>
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSArray *arrayOfTypes;
 
 @end
 
-@implementation MPTransactionsHistoryVIewControllerViewController
+@implementation MPTransactionsHistoryViewController
 
 static NSString *const cellHistoryIdentifier = @"transactionHistoryIdentifier";
 //@synthesize fetchedResultsController = _fetchedResultsController;

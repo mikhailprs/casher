@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MPTransactionsHistoryVIewControllerViewController : UITableViewController
+@interface MPTransactionsHistoryViewController : UITableViewController
 
 @end

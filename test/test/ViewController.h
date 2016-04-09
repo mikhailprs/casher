@@ -14,6 +14,9 @@
 
 @property (strong, nonatomic) MPDashBoardBottomView *bottomView;
 @property (strong, nonatomic) MPStatisticView *view_avialable;
+@property (strong, nonatomic) MPStatisticView *view_keeped ;
+@property (strong, nonatomic) MPStatisticView *view_lastEarn;
+@property (strong, nonatomic) MPStatisticView *view_lastWaste;
 
 @property (weak,   nonatomic) IBOutlet UIView *view_container;
 

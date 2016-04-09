@@ -17,6 +17,7 @@
     self = [super initWithCoder:aDecoder];
     if (self) {
         [self.contentView setBackgroundColor:self.backgroundColor];
+        [self setup];
     }
     return self;
 }
@@ -25,7 +26,14 @@
 - (void)setTypeCell:(MPBottomTypeCellEnum)typeCell{
     _typeCell = typeCell;
     [self updateCellViewByCellType];
-    [self.lbl_name setText:[NSString stringWithFormat:@"%d",(int)typeCell]];
+    
+}
+
+- (void)setup{
+    self.lbl_name.numberOfLines = 0;
+    self.lbl_name.adjustsFontSizeToFitWidth = YES;
+    self.lbl_name.textAlignment = NSTextAlignmentLeft;
+    self.lbl_name.minimumScaleFactor = 0.5;
 }
 
 
@@ -34,45 +42,46 @@
     NSString *textForLabel;
     NSString *imageName;
     switch (self.typeCell) {
-        case OPTKBottomTypeCellFavorites:{
-//            textForLabel = [self.localizationManager getCurrentLocalizedStringForKey:@"bottom_cell_favorites"];
+        case OPTKBottomTypeCellDeposit:{
+            textForLabel = @"Add Earn";
 //            imageName = @"bottomCellFavorites";
             break;}
         case OPTKBottomTypeCellOpenTrades:{
-//            textForLabel = [self.localizationManager getCurrentLocalizedStringForKey:@"bottom_cell_open_trades"];
+            textForLabel = @"Add Waste";
 //            imageName = @"bottomCellOpenTrades";
             break;}
         case OPTKBottomTypeCellClosedTrades:{
-//            textForLabel = [self.localizationManager getCurrentLocalizedStringForKey:@"bottom_cell_closed_trades"];
+            textForLabel = @"Earning Amount";
 //            imageName = @"bottomCellClosedTrades";
             break;}
-        case OPTKBottomTypeCellDeposit:{
-//            textForLabel = [self.localizationManager getCurrentLocalizedStringForKey:@"bottom_cell_deposit"];
+        case OPTKBottomTypeCellFavorites:{
+            textForLabel = @"Wasting History";
 //            imageName = @"bottomCellDeposit";
             break;}
         case OPTKBottomTypeCellOrders:{
-//            textForLabel = [self.localizationManager getCurrentLocalizedStringForKey:@"bottom_cell_orders"];
+            textForLabel = @"NULL";
 //            imageName = @"bottomCellOrders";
             break;}
         case OPTKBottomTypeCellPriceAlerts:{
-//            textForLabel = [self.localizationManager getCurrentLocalizedStringForKey:@"bottom_cell_price_alert"];
+            textForLabel = @"NULL";
 //            imageName = @"bottomCellPriceAlerts";
             break;}
         case OPTKBottomTypeCellPendingBonus:{
-//            textForLabel = [self.localizationManager getCurrentLocalizedStringForKey:@"bottom_cell_pending_bonus"];
+            textForLabel = @"NULL";
 //            imageName = @"bottomCellPendingBonus";
             break;}
         case OPTKBottomTypeCellReports:{
-//            textForLabel = [self.localizationManager getCurrentLocalizedStringForKey:@"bottom_cell_reports"];
+            textForLabel = @"NULL";
 //            imageName = @"bottomCellReports";
             break;}
         default:{
-//            textForLabel = [self.localizationManager getCurrentLocalizedStringForKey:@"bottom_cell_favorites"];
+            textForLabel = @"NULL";
 //            imageName = @"bottomCellFavorites";
             break;}
     }
-    
+    [self.lbl_name setText:[NSString stringWithFormat:@"%@",textForLabel]];
 //    [self setImageByName:imageName labelText:textForLabel];
 }
+
 
 @end

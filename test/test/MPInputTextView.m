@@ -59,7 +59,6 @@
     self.tf_amount.backgroundColor = [UIColor grayColor];
     [self addSubview:self.lbl_titile];
     [self addSubview:self.tf_amount];
-    self.lbl_titile.text = @"Enter Amount";
 }
 
 - (void)makeConstraints{

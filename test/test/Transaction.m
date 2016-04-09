@@ -2,11 +2,12 @@
 //  Transaction.m
 //  test
 //
-//  Created by Michail on 25.02.16.
+//  Created by Mikhail Prysiazhniy on 19.03.16.
 //  Copyright © 2016 Michail. All rights reserved.
 //
 
 #import "Transaction.h"
+#import "Balance.h"
 #import "Companion.h"
 
 @implementation Transaction

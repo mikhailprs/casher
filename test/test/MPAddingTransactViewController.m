@@ -83,6 +83,7 @@
 - (void)createInputView{
     _view_input = [[MPInputTextView alloc] init];
     [self.view addSubview:self.view_input];
+    [self.view_input.lbl_titile setText:@"Enter amount"];
 }
 
 
