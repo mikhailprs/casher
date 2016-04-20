@@ -14,6 +14,8 @@
 #import "MPLocationManager.h"
 #import "MPTransTypeSwitcherView.h"
 #import "MPExtension.h"
+#import "Balance+CoreDataProperties.h"
+#import "NSDate+Formatter.h"
 
 @interface MPAddingTransactViewController () <OPTKTransactionTypeSwitchesViewProtocol>
 
@@ -45,12 +47,6 @@
     [self makeConstraints];
     [self printAllObjects];
     [self initDefaultValues];
-//    [self savePerson];
-//    [self printAllObjects];
-//    [self deleteAllObjects];
-
-//    [MPLocationManager sharedLocationManager];
-    // Do any additional setup after loading the view.
 }
 
 
@@ -146,9 +142,31 @@
         Transaction *transaction = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([Transaction class]) inManagedObjectContext:self.context];
         transaction.trans_amount = [NSNumber numberWithDouble:[self.view_input.tf_amount.text doubleValue]];
         transaction.trans_time = [NSDate date];
+        if (!_street){
+            MPLocationManager *localManager = [MPLocationManager sharedLocationManager];
+            _street = localManager.lastKnownStreet;
+        }
         transaction.trans_location = self.street;
         transaction.trans_type = [NSNumber numberWithInt:self.transactionType];
         [self.context insertObject:transaction];
+        
+        NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Balance"];
+        NSError *error = nil;
+        NSArray *results = [self.context executeFetchRequest:request error:&error];
+        if (!results) {
+            NSLog(@"Error fetching Employee objects: %@\n%@", [error localizedDescription], [error userInfo]);
+            abort();
+        }
+        if (results.count){
+            Balance *balance = [results firstObject];
+            balance.loss = transaction;
+            [self.context processPendingChanges];
+        }else{
+            Balance *balance = [NSEntityDescription insertNewObjectForEntityForName:@"Balance" inManagedObjectContext:self.context];
+            balance.loss= transaction;
+            [self.context insertObject:balance];
+        }
+
         [self.context save:nil];
     });
     
@@ -258,15 +276,5 @@
     _transactionType = (MPTransactionType)idx;
 }
 
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

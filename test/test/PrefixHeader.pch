@@ -31,10 +31,11 @@ typedef enum {
 //
 
 #import <Availability.h>
-
+#import "MPColorManager.h"
 
 #ifdef __OBJC__
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 #import <Masonry/Masonry.h>
+
 #endif

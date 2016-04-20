@@ -11,6 +11,7 @@
 
 #import "Balance+CoreDataProperties.h"
 #import "Earning+CoreDataProperties.h"
+#import "Transaction+CoreDataProperties.h"
 @implementation Balance (CoreDataProperties)
 
 @dynamic amount;
@@ -24,9 +25,25 @@
 }
 
 
+- (void)setLoss:(Transaction *)loss{
+    [self willChangeValueForKey:@"amount"];
+    NSNumber *currentAmount = [NSNumber numberWithFloat:([self.amount floatValue] - [loss.trans_amount floatValue])];
+    [self setAmount:currentAmount];
+    [self setPrimitiveValue:loss forKey:@"loss"];
+    [self didChangeValueForKey:@"amount"];
+}
+
+- (void)setProfit:(Earning *)profit{
+    [self willChangeValueForKey:@"profit"];
+    NSNumber *currentAmount = [NSNumber numberWithFloat:([self.amount floatValue] + [profit.earn_amount floatValue])];
+    [self setAmount:currentAmount];
+    [self setPrimitiveValue:profit forKey:@"profit"];
+    [self didChangeValueForKey:@"profit"];
+}
+
+
 - (void) setAmount:(NSNumber *)amount{
     [self willChangeValueForKey:@"amount"];
-    
     [self setPrimitiveValue:amount forKey:@"amount"];
     [self didChangeValueForKey:@"amount"];
 }

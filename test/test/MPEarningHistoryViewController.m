@@ -9,6 +9,7 @@
 #import "MPEarningHistoryViewController.h"
 #import "MPEarningHistoryCell.h"
 #import "Earning+CoreDataProperties.h"
+#import "NSDate+Formatter.h"
 
 @interface MPEarningHistoryViewController () <NSFetchedResultsControllerDelegate>
 
@@ -24,17 +25,11 @@ static NSString *const cellearnHistoryIdentifier = @"earnHistoryIdentifier";
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.tableView registerClass:[MPEarningHistoryCell class] forCellReuseIdentifier:cellearnHistoryIdentifier];
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    self.navigationItem.title = @"Earning History";
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 
@@ -45,8 +40,6 @@ static NSString *const cellearnHistoryIdentifier = @"earnHistoryIdentifier";
     if (_fetchedResultsController != nil) {
         return _fetchedResultsController;
     }
-    // на сколько понял кеш для search норм использовать когда по буквам поиск
-//    [NSFetchedResultsController deleteCacheWithName:@"Root"];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription
                                    entityForName:@"Earning" inManagedObjectContext:self.managedObjectContext];
@@ -68,8 +61,6 @@ static NSString *const cellearnHistoryIdentifier = @"earnHistoryIdentifier";
     if (![_fetchedResultsController performFetch:&error]) {
         NSLog(@"Failed to initialize FetchedResultsController: %@\n%@", [error localizedDescription], [error userInfo]);
     }
-    
-    
     return _fetchedResultsController;
 }
 
@@ -82,11 +73,7 @@ static NSString *const cellearnHistoryIdentifier = @"earnHistoryIdentifier";
 }
 
 
-- (void)configureCell:(MPEarningHistoryCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-    Earning *earning = [_fetchedResultsController objectAtIndexPath:indexPath];
-    cell.amount.text = [NSString stringWithFormat:@"%@",earning.earn_amount];
-    cell.date.text = [NSString stringWithFormat:@"%@",earning.earn_date];
-}
+
 
 #pragma mark - Table view data source
 
@@ -107,6 +94,11 @@ static NSString *const cellearnHistoryIdentifier = @"earnHistoryIdentifier";
     return cell;
 }
 
+- (void)configureCell:(MPEarningHistoryCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+    Earning *earning = [_fetchedResultsController objectAtIndexPath:indexPath];
+    cell.amount.text = [NSString stringWithFormat:@"%@",earning.earn_amount];
+    cell.date.text = [NSString stringWithFormat:@"%@",earning.earn_date.getFormattedGMTTimeWithoutYear];
+}
 
 
 #pragma mark - editing rows

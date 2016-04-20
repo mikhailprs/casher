@@ -13,6 +13,7 @@
 #import "Transaction+CoreDataProperties.h"
 #import "MPTransactionHistoryCell.h"
 #import "MPExtension.h"
+#import "NSDate+Formatter.h"
 
 @interface MPTransactionsHistoryViewController () <NSFetchedResultsControllerDelegate>
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
@@ -41,7 +42,7 @@ static NSString *const cellHistoryIdentifier = @"transactionHistoryIdentifier";
 
 
 - (void)setup{
-     [self.tableView registerNib:[UINib nibWithNibName:@"MPTransactionHistoryCell" bundle:nil] forCellReuseIdentifier:cellHistoryIdentifier];
+     [self.tableView registerClass:[MPTransactionHistoryCell class] forCellReuseIdentifier:cellHistoryIdentifier];
 //    [self.tableView setEditing:YES];
     
 }
@@ -54,7 +55,7 @@ static NSString *const cellHistoryIdentifier = @"transactionHistoryIdentifier";
         return _fetchedResultsController;
     }
     // на сколько понял кеш для search норм использовать когда по буквам поиск
-    [NSFetchedResultsController deleteCacheWithName:@"Root"];
+//    [NSFetchedResultsController deleteCacheWithName:@"Root"];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription
                                    entityForName:@"Transaction" inManagedObjectContext:self.managedObjectContext];
@@ -69,15 +70,14 @@ static NSString *const cellHistoryIdentifier = @"transactionHistoryIdentifier";
     NSFetchedResultsController *theFetchedResultsController =
     [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
                                         managedObjectContext:_managedObjectContext sectionNameKeyPath:nil
-                                                   cacheName:@"Root"];
+                                                   cacheName:nil];
     _fetchedResultsController = theFetchedResultsController;
     _fetchedResultsController.delegate = self;
     NSError *error = nil;
     if (![_fetchedResultsController performFetch:&error]) {
-       NSLog(@"Failed to initialize FetchedResultsController: %@\n%@", [error localizedDescription], [error userInfo]);
+        NSLog(@"Failed to initialize FetchedResultsController: %@\n%@", [error localizedDescription], [error userInfo]);
     }
-
-    
+   
     return _fetchedResultsController;
 }
 
@@ -208,7 +208,7 @@ static NSString *const cellHistoryIdentifier = @"transactionHistoryIdentifier";
         _arrayOfTypes = [MPExtension getTransactionTypes];
     }
     cell.lbl_type.text = [NSString stringWithFormat:@"%@",self.arrayOfTypes[[transaction.trans_type integerValue]]];
-    cell.lbl_time.text = [NSString stringWithFormat:@"%@",transaction.trans_time];
+    cell.lbl_time.text = [NSString stringWithFormat:@"%@",transaction.trans_time.getFormattedGMTTimeWithoutYear];
 }
 
 - (NSArray *)getAllObjects {

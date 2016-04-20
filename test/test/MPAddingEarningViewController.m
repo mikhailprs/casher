@@ -11,11 +11,19 @@
 #import <Masonry/Masonry.h>
 #import "Earning+CoreDataProperties.h"
 #import "Balance+CoreDataProperties.h"
-@interface MPAddingEarningViewController ()
+#import "MPButton.h"
+#import "MPAlertAction.h"
+#import "MPEarningHistoryViewController.h"
+#import "ViewController.h"
+#import "MBProgressHUD.h"
+
+
+@interface MPAddingEarningViewController ()  <UITextFieldDelegate>
 
 @property (strong, nonatomic) MPInputTextView           *view_input;
-@property (strong, nonatomic) UIButton                  *btn_confirm;
+@property (strong, nonatomic) MPButton                  *btn_confirm;
 @property (strong, nonatomic) NSManagedObjectContext    *context;
+@property (strong, nonatomic) MBProgressHUD *hud;
 
 @end
 
@@ -26,16 +34,17 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initStartUp];
-    // Do any additional setup after loading the view.
 }
 
 - (void)viewWillAppear:(BOOL)animated{
-    
+    self.btn_confirm.highlighted = NO;
+    self.btn_confirm.selected = NO;
 }
 
 #pragma mark - init methods
 
 - (void)initStartUp{
+    self.navigationItem.title = @"New earn";
     [self makeUI];
     [self makeConstraints];
 }
@@ -52,6 +61,8 @@
 
 - (void)createInputView{
     _view_input = [[MPInputTextView alloc] init];
+    [self.view_input.tf_amount setDelegate:self];\
+//    [self.view_input.tf_amount setKeyboardType:UIKeyboardTypeNumberPad];
     [self.view_input.lbl_titile setText:@"Earning:"];
     [self.view addSubview:self.view_input];
 }
@@ -60,17 +71,15 @@
 - (void)makeInputViewConstraints{
     [self.view_input mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.equalTo(self.view).with.offset(0.f);
-        make.top.equalTo(self.view.mas_top).with.offset(70.f);
-        make.height.equalTo(@(60.f));
+        make.top.equalTo(self.view.mas_top).with.offset(80.f);
+        make.height.equalTo(@(70.f));
     }];
 }
 
 
 - (void)createConfirmButtton{
-    _btn_confirm = [[UIButton alloc] init];
+    _btn_confirm = [[MPButton alloc] init];
     [self.btn_confirm setTitle:@"Confirm" forState:UIControlStateNormal];
-    self.btn_confirm.backgroundColor = [UIColor grayColor];
-    [self.btn_confirm setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [self.btn_confirm addTarget:self action:@selector(confirnAction) forControlEvents:UIControlEventTouchDown];
     [self.view addSubview:self.btn_confirm];
 }
@@ -95,10 +104,12 @@
     return _context;
 }
 
-
 #pragma mark - common
 
 - (void)confirnAction{
+    if ([self.view_input.tf_amount.text isEqualToString:@""]){
+        return;
+    }
     Earning *earning = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([Earning class]) inManagedObjectContext:self.context];
     
     earning.earn_amount = [NSNumber numberWithDouble:[self.view_input.tf_amount.text doubleValue]];
@@ -115,15 +126,74 @@
     if (results.count){
         Balance *balance = [results firstObject];
         balance.profit = earning;
-        NSNumber *num = [NSNumber numberWithFloat:([balance.amount floatValue] + [earning.earn_amount floatValue])];
-        balance.amount = num;
         [self.context processPendingChanges];
     }else{
         Balance *balance = [NSEntityDescription insertNewObjectForEntityForName:@"Balance" inManagedObjectContext:self.context];
         balance.profit = earning;
-        balance.amount = earning.earn_amount;
         [self.context insertObject:balance];
     }
-    [self.context save:nil];
+    [self.context save:&error];
+    
+   
+    if (error){
+        NSLog(@"%@", [error localizedDescription]);
+    }else{
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Successful" message:@"Go to the next screen" preferredStyle:UIAlertControllerStyleAlert];
+        
+        
+       
+        void(^handlerActionController)(UIAlertAction *action) = ^(UIAlertAction *action){
+            MPAlertAction *actionType = (id)action;
+            [self didSelectedAtIndex:actionType.index];
+        };
+             
+        MPAlertAction *alertActionOK = [MPAlertAction actionWithTitle:@"Balance" style:UIAlertActionStyleDefault handler:handlerActionController];
+        alertActionOK.index = 0;
+        
+        MPAlertAction *alertActionNO = [MPAlertAction actionWithTitle:@"Earn History" style:UIAlertActionStyleDefault handler:handlerActionController];
+        alertActionNO.index = 1;
+        
+        [alertController addAction:alertActionOK];
+        [alertController addAction:alertActionNO];
+        self.view_input.tf_amount.text = @"";
+        [self.view_input.tf_amount resignFirstResponder];
+        [self presentViewController: alertController animated:YES completion:nil];
+    }
+    
+}
+
+- (void) didSelectedAtIndex:(NSInteger)index{
+    __weak typeof (self) wSelf = self;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (index == 0){
+            [wSelf.navigationController popViewControllerAnimated:YES];
+        }else{
+            MPEarningHistoryViewController *vc = [MPEarningHistoryViewController new];
+            [wSelf.navigationController pushViewController:vc animated:YES];
+        }
+    });
+}
+
+
+#pragma mark - UITextFieldDelegate
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    if([textField isEditing]){
+        [textField resignFirstResponder];
+    }
+    return NO;
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if(string.length > 0)
+    {
+        NSCharacterSet *numbersOnly = [NSCharacterSet characterSetWithCharactersInString:@"0123456789"];
+        NSCharacterSet *characterSetFromTextField = [NSCharacterSet characterSetWithCharactersInString:string];
+        
+        BOOL stringIsValid = [numbersOnly isSupersetOfSet:characterSetFromTextField];
+        return stringIsValid;
+    }
+    return YES;
 }
 @end

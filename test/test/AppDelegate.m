@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-
+#import "MPLocationManager.h"
 @interface AppDelegate ()
 
 @end

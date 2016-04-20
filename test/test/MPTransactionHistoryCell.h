@@ -9,9 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @interface MPTransactionHistoryCell : UITableViewCell
-@property (weak, nonatomic) IBOutlet UILabel *lbl_type;
-@property (weak, nonatomic) IBOutlet UILabel *lbl_amount;
-@property (weak, nonatomic) IBOutlet UILabel *lbl_place;
-@property (weak, nonatomic) IBOutlet UILabel *lbl_time;
+@property (strong, nonatomic) IBOutlet UILabel *lbl_type;
+@property (strong, nonatomic) IBOutlet UILabel *lbl_amount;
+@property (strong, nonatomic) IBOutlet UILabel *lbl_place;
+@property (strong, nonatomic) IBOutlet UILabel *lbl_time;
 
 @end

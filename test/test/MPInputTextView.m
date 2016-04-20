@@ -9,6 +9,7 @@
 #import "MPInputTextView.h"
 #import <Masonry/Masonry.h>
 
+
 @implementation MPInputTextView
 
 
@@ -46,39 +47,44 @@
 #pragma mark - common methods
 
 - (void)create{
-    self.layer.borderWidth = 2.f;
-    self.layer.borderColor = [UIColor blackColor].CGColor;
-    self.backgroundColor = [UIColor lightGrayColor];
+    MPColorManager *colorManager = [MPColorManager sharedColorManager];
+    self.layer.borderWidth = 1.f;
+    self.layer.cornerRadius = 7.f;
+    self.layer.borderColor = colorManager.purple_67327f.CGColor;
+    self.backgroundColor = colorManager.purple_d8c9de;
     [self makeUI];
     [self makeConstraints];
 }
 
 - (void)makeUI{
     _lbl_titile = [[UILabel alloc] init];
+    [self.lbl_titile setTextColor:[MPColorManager sharedColorManager].purple_3e1d4f];
+    [self.lbl_titile setFont:[UIFont fontWithName:@"OpenSans" size:40]];
+    
     _tf_amount = [[UITextField alloc] init];
-    self.tf_amount.backgroundColor = [UIColor grayColor];
+    self.tf_amount.textAlignment = NSTextAlignmentRight;
+    self.tf_amount.placeholder = @"Enter amount";
+    self.tf_amount.borderStyle = UITextBorderStyleRoundedRect;
+    self.tf_amount.clearButtonMode = UITextFieldViewModeWhileEditing;
     [self addSubview:self.lbl_titile];
     [self addSubview:self.tf_amount];
 }
 
 - (void)makeConstraints{
     [self.lbl_titile mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.bottom.left.equalTo(self).with.offset(0.f);
-        make.right.equalTo(self.tf_amount.mas_left).with.offset(0.f);
-        make.width.equalTo(self.tf_amount.mas_width).with.offset(0.f);
+        make.left.equalTo(self.mas_left).with.offset(20.f);
+        make.top.bottom.equalTo(self).with.offset(0.f);
+        make.width.equalTo(self.tf_amount.mas_width).with.offset(-20);
     }];
     
     [self.tf_amount mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.top.bottom.equalTo(self).with.offset(0.f);
+        make.right.equalTo(self.mas_right).with.offset(-10.f);
+        make.left.equalTo(self.lbl_titile.mas_right).with.offset(20.f);
+        make.top.equalTo(self.mas_top).with.offset(15.f);
+        make.bottom.equalTo(self.mas_bottom).with.offset(-15.f);
     }];
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
-}
-*/
+
 
 @end

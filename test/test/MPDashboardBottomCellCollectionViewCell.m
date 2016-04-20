@@ -51,7 +51,7 @@
 //            imageName = @"bottomCellOpenTrades";
             break;}
         case OPTKBottomTypeCellClosedTrades:{
-            textForLabel = @"Earning Amount";
+            textForLabel = @"Earning History";
 //            imageName = @"bottomCellClosedTrades";
             break;}
         case OPTKBottomTypeCellFavorites:{

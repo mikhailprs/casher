@@ -15,4 +15,6 @@ typedef void (^locationFinderBlock)(NSString* city, NSString* zone);
 
 @property (copy, nonatomic) locationFinderBlock locationFinder;
 
+@property (strong, nonatomic, readonly) NSString *lastKnownStreet;
+
 @end

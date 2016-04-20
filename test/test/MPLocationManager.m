@@ -8,9 +8,11 @@
 
 #import "MPLocationManager.h"
 #import <CoreLocation/CoreLocation.h>
+
 @interface MPLocationManager () <CLLocationManagerDelegate>
 
 @property (strong, nonatomic)  CLLocationManager *locationManager;
+@property (strong, nonatomic, readwrite) NSString *lastKnownStreet;
 
 @end
 
@@ -52,6 +54,7 @@
     __weak typeof (self) wSelf = self;
     [geoCoder reverseGeocodeLocation:loca completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
         CLPlacemark * myPlacemark = [placemarks firstObject];
+        _lastKnownStreet = myPlacemark.name;
         wSelf.locationFinder(myPlacemark.name,myPlacemark.subAdministrativeArea);
         [wSelf.locationManager stopUpdatingLocation];
 //        NSLog(@"%@ | %@ | %@ ",myPlacemark.name,myPlacemark.subAdministrativeArea,myPlacemark.subLocality);

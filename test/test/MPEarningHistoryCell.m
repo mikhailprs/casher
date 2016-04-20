@@ -10,11 +10,6 @@
 
 @implementation MPEarningHistoryCell
 
-- (void)awakeFromNib {
-    [super awakeFromNib];
-    [self setup];
-    // Initialization code
-}
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
@@ -33,14 +28,18 @@
     _date = [[UILabel alloc] init];
     [self addSubview:self.amount];
     [self addSubview:self.date];
-    self.amount.textAlignment = NSTextAlignmentLeft;
-    self.date.textAlignment = NSTextAlignmentCenter;
+    self.amount.textAlignment = NSTextAlignmentCenter;
+    self.date.textAlignment = NSTextAlignmentRight;
+    
     [self.amount mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.top.bottom.equalTo(self);
-        make.right.equalTo(self.date.mas_left).with.offset(10.f);
+        make.top.bottom.equalTo(self);
+        make.left.equalTo(self.mas_left).with.offset(10.f);
+        make.right.lessThanOrEqualTo(self.date.mas_left).with.offset(-10.f);
     }];
+    
     [self.date mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.top.bottom.equalTo(self);
+        make.top.bottom.equalTo(self);
+        make.right.equalTo(self.mas_right).with.offset(-10.f);
     }];
 }
 
