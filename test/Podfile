@@ -4,6 +4,6 @@
 # use_frameworks!
 
 pod ‘Masonry’
-pod 'MBProgressHUD'
+
 
 

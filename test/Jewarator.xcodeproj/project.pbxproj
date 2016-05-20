@@ -159,17 +159,8 @@
 				546747161C7F09E300113990 /* Views */,
 				546746D61C7EEF6B00113990 /* AppDelegate.h */,
 				546746D71C7EEF6B00113990 /* AppDelegate.m */,
-				546746D91C7EEF6B00113990 /* ViewController.h */,
-				546746DA1C7EEF6B00113990 /* ViewController.m */,
 				546746DC1C7EEF6B00113990 /* Main.storyboard */,
-				C2E76E761CA6BDFB00C770E2 /* MPEarningHistoryViewController.h */,
-				C2E76E771CA6BDFB00C770E2 /* MPEarningHistoryViewController.m */,
-				C22769231C8E44A0002359B3 /* MPTransactionsHistoryViewController.h */,
-				C22769241C8E44A0002359B3 /* MPTransactionsHistoryViewController.m */,
-				546747171C7F2B5100113990 /* MPAddingTransactViewController.h */,
-				546747181C7F2B5100113990 /* MPAddingTransactViewController.m */,
-				C29F89C11CA48A8D00350B16 /* MPAddingEarningViewController.h */,
-				C29F89C21CA48A8D00350B16 /* MPAddingEarningViewController.m */,
+				548496211CEEF4670075AC8F /* ViewControllers */,
 				546746E21C7EEF6B00113990 /* Assets.xcassets */,
 				546746E41C7EEF6B00113990 /* LaunchScreen.storyboard */,
 				546746E71C7EEF6B00113990 /* Info.plist */,
@@ -242,6 +233,63 @@
 				543A02841C80901800305903 /* MPStatisticView.m */,
 			);
 			name = Views;
+			sourceTree = "<group>";
+		};
+		548496211CEEF4670075AC8F /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				548496221CEEF4970075AC8F /* DashBoard */,
+				548496231CEEF4A50075AC8F /* EarningHistory */,
+				548496241CEEF4B40075AC8F /* TransactionHistory */,
+				548496251CEEF4C90075AC8F /* AddTransaction */,
+				548496261CEEF4E00075AC8F /* AddEarning */,
+			);
+			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		548496221CEEF4970075AC8F /* DashBoard */ = {
+			isa = PBXGroup;
+			children = (
+				546746D91C7EEF6B00113990 /* ViewController.h */,
+				546746DA1C7EEF6B00113990 /* ViewController.m */,
+			);
+			name = DashBoard;
+			sourceTree = "<group>";
+		};
+		548496231CEEF4A50075AC8F /* EarningHistory */ = {
+			isa = PBXGroup;
+			children = (
+				C2E76E771CA6BDFB00C770E2 /* MPEarningHistoryViewController.m */,
+				C2E76E761CA6BDFB00C770E2 /* MPEarningHistoryViewController.h */,
+			);
+			name = EarningHistory;
+			sourceTree = "<group>";
+		};
+		548496241CEEF4B40075AC8F /* TransactionHistory */ = {
+			isa = PBXGroup;
+			children = (
+				C22769231C8E44A0002359B3 /* MPTransactionsHistoryViewController.h */,
+				C22769241C8E44A0002359B3 /* MPTransactionsHistoryViewController.m */,
+			);
+			name = TransactionHistory;
+			sourceTree = "<group>";
+		};
+		548496251CEEF4C90075AC8F /* AddTransaction */ = {
+			isa = PBXGroup;
+			children = (
+				546747171C7F2B5100113990 /* MPAddingTransactViewController.h */,
+				546747181C7F2B5100113990 /* MPAddingTransactViewController.m */,
+			);
+			name = AddTransaction;
+			sourceTree = "<group>";
+		};
+		548496261CEEF4E00075AC8F /* AddEarning */ = {
+			isa = PBXGroup;
+			children = (
+				C29F89C11CA48A8D00350B16 /* MPAddingEarningViewController.h */,
+				C29F89C21CA48A8D00350B16 /* MPAddingEarningViewController.m */,
+			);
+			name = AddEarning;
 			sourceTree = "<group>";
 		};
 		A440F6C968CEEE492059A56F /* Frameworks */ = {
