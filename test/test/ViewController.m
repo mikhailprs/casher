@@ -15,6 +15,7 @@
 #import "Earning+CoreDataProperties.h"
 #import "Transaction+CoreDataProperties.h"
 
+
 @interface ViewController () <MPDashBoardBottomViewDelegate>
 
 @property (strong , nonatomic) NSManagedObjectContext *context;

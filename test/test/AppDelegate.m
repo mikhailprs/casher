@@ -8,14 +8,19 @@
 
 #import "AppDelegate.h"
 #import "MPLocationManager.h"
+#import "Backendless.h"
 @interface AppDelegate ()
 
 @end
 
 @implementation AppDelegate
 
+static NSString *const APP_ID = @"44214466-87A0-AC03-FFA7-2129B6CDC000";
+static NSString *const SECRET_KEY = @"A97F9859-0E7A-8E1F-FFBA-CDE30F412500";
+static NSString *const VERSION_NUM = @"v1";
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+     [backendless initApp:APP_ID secret:SECRET_KEY version:VERSION_NUM];
     // Override point for customization after application launch.
     return YES;
 }

@@ -10,6 +10,7 @@
 #import "MPEarningHistoryCell.h"
 #import "Earning+CoreDataProperties.h"
 #import "NSDate+Formatter.h"
+#import "Backendless.h"
 
 @interface MPEarningHistoryViewController () <NSFetchedResultsControllerDelegate>
 

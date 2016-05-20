@@ -15,7 +15,6 @@
 #import "MPAlertAction.h"
 #import "MPEarningHistoryViewController.h"
 #import "ViewController.h"
-#import "MBProgressHUD.h"
 
 
 @interface MPAddingEarningViewController ()  <UITextFieldDelegate>
@@ -23,7 +22,6 @@
 @property (strong, nonatomic) MPInputTextView           *view_input;
 @property (strong, nonatomic) MPButton                  *btn_confirm;
 @property (strong, nonatomic) NSManagedObjectContext    *context;
-@property (strong, nonatomic) MBProgressHUD *hud;
 
 @end
 
