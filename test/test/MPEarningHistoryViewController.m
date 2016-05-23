@@ -10,6 +10,7 @@
 #import "MPEarningHistoryCell.h"
 #import "Earning+CoreDataProperties.h"
 #import "NSDate+Formatter.h"
+#import "AppDelegate.h"
 
 @interface MPEarningHistoryViewController () <NSFetchedResultsControllerDelegate>
 
@@ -66,8 +67,8 @@ static NSString *const cellearnHistoryIdentifier = @"earnHistoryIdentifier";
 
 - (NSManagedObjectContext *)managedObjectContext{
     if (!_managedObjectContext){
-        id delegate = [[UIApplication sharedApplication] delegate];
-        _managedObjectContext = [delegate managedObjectContext];
+        AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
+        _managedObjectContext = [delegate.coreDataBridge managedObjectContext];
     }
     return _managedObjectContext;
 }

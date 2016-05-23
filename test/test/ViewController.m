@@ -6,14 +6,21 @@
 //  Copyright © 2016 Michail. All rights reserved.
 //
 
-#import "ViewController.h"
-#import "MPStatisticView.h"
-#import <Masonry/Masonry.h>
-#import "MPAddingEarningViewController.h"
+
+
+#import "AppDelegate.h"
 #import <CoreData/CoreData.h>
+#import <Masonry/Masonry.h>
+#import "ViewController.h"
 #import "Balance+CoreDataProperties.h"
 #import "Earning+CoreDataProperties.h"
 #import "Transaction+CoreDataProperties.h"
+
+#import "MPStatisticView.h"
+#import "MPAddingEarningViewController.h"
+#import "MPDashBoardBottomView.h"
+
+
 
 
 @interface ViewController () <MPDashBoardBottomViewDelegate>
@@ -26,6 +33,7 @@
 
 
 
+#pragma mark - view controller methods
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -47,6 +55,17 @@
 }
 
 
+#pragma mark - accessors
+
+- (NSManagedObjectContext *)context{
+    if (!_context){
+        AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
+        _context = [delegate.coreDataBridge managedObjectContext];
+    }
+    return _context;
+}
+
+
 #pragma mark - init methods
 
 
@@ -59,7 +78,7 @@
 - (void)initBottomCollectionView{
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
     _bottomView = [[MPDashBoardBottomView alloc] initWithFrame:CGRectZero collectionViewLayout:flowLayout];
-    [self.view_container addSubview:_bottomView];
+    [self.view addSubview:_bottomView];
 }
 
 - (void)initAvailableView{
@@ -68,16 +87,16 @@
     _view_keeped = [[MPStatisticView alloc] init];
     _view_lastEarn = [[MPStatisticView alloc] init];
     _view_lastWaste = [[MPStatisticView alloc] init];
-    UIView *view = self.view_container;
-    [self.view_container addSubview:self.view_avialable];
-    [self.view_container addSubview:self.view_keeped];
-    [self.view_container addSubview:self.view_lastEarn];
-    [self.view_container addSubview:self.view_lastWaste];
+    UIView *view = self.view;
+    [view addSubview:self.view_avialable];
+    [view addSubview:self.view_keeped];
+    [view addSubview:self.view_lastEarn];
+    [view addSubview:self.view_lastWaste];
     
     [self.view_avialable mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(view).with.offset(40.f);
         make.right.equalTo(view.mas_right).with.offset(-40.f);
-        make.top.equalTo(view.mas_top).with.offset(40.f);
+        make.top.equalTo(view.mas_top).with.offset(84.f);
         make.height.equalTo(@(self.view_avialable.defaultHeight));
     }];
     
@@ -125,17 +144,6 @@
     [self.context save:nil];
 }
 
-
-#pragma mark - accessors
-
-- (NSManagedObjectContext *)context{
-    if (!_context){
-        id delegate = [[UIApplication sharedApplication] delegate];
-        _context = [delegate managedObjectContext];
-    }
-    return _context;
-}
-
 #pragma mark - init constraints
 
 - (void)makeConstraints{
@@ -144,9 +152,9 @@
 
 - (void)bottomCollectionConstraints{
     [self.bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.equalTo(self.view_container).with.offset(0.f);
+        make.left.right.equalTo(self.view).with.offset(0.f);
         make.height.equalTo(@85.f);
-        make.bottom.equalTo(self.view_container.mas_bottom).with.offset(-50.f);
+        make.bottom.equalTo(self.view.mas_bottom).with.offset(-50.f);
     }];
 }
 

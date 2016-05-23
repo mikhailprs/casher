@@ -15,7 +15,7 @@
 #import "MPAlertAction.h"
 #import "MPEarningHistoryViewController.h"
 #import "ViewController.h"
-
+#import "AppDelegate.h"
 
 @interface MPAddingEarningViewController ()  <UITextFieldDelegate>
 
@@ -96,8 +96,8 @@
 
 - (NSManagedObjectContext *)context{
     if (!_context){
-        id delegate = [[UIApplication sharedApplication] delegate];
-        _context = [delegate managedObjectContext];
+        AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
+        _context = [delegate.coreDataBridge managedObjectContext];
     }
     return _context;
 }

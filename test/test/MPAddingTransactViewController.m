@@ -16,6 +16,7 @@
 #import "MPExtension.h"
 #import "Balance+CoreDataProperties.h"
 #import "NSDate+Formatter.h"
+#import "AppDelegate.h"
 
 @interface MPAddingTransactViewController () <OPTKTransactionTypeSwitchesViewProtocol>
 
@@ -178,8 +179,8 @@
 
 - (NSManagedObjectContext *)context{
     if (!_context){
-        id delegate = [[UIApplication sharedApplication] delegate];
-        _context = [delegate managedObjectContext];
+        AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
+        _context = [delegate.coreDataBridge managedObjectContext];
     }
     return _context;
 }
