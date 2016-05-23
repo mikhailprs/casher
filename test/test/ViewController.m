@@ -19,7 +19,7 @@
 #import "MPStatisticView.h"
 #import "MPAddingEarningViewController.h"
 #import "MPDashBoardBottomView.h"
-
+#import "MPChartViewController.h"
 
 
 
@@ -209,6 +209,8 @@
             break;}
         case OPTKBottomTypeCellOrders:{
              NSLog(@"%ld",(long)indexPath.row);
+            MPChartViewController *vc = [[MPChartViewController alloc] init];
+            [self.navigationController pushViewController:vc animated:NO];
 //            [self performSegueWithIdentifier:@"push_to_place_order_list" sender:collectionView];
             break;}
         case OPTKBottomTypeCellPriceAlerts:{
