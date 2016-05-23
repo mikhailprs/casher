@@ -14,6 +14,7 @@
 #import "MPTransactionHistoryCell.h"
 #import "MPExtension.h"
 #import "NSDate+Formatter.h"
+#import "AppDelegate.h"
 
 @interface MPTransactionsHistoryViewController () <NSFetchedResultsControllerDelegate>
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
@@ -83,8 +84,8 @@ static NSString *const cellHistoryIdentifier = @"transactionHistoryIdentifier";
 
 - (NSManagedObjectContext *)managedObjectContext{
     if (!_managedObjectContext){
-        id delegate = [[UIApplication sharedApplication] delegate];
-        _managedObjectContext = [delegate managedObjectContext];
+        AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
+        _managedObjectContext = [delegate.coreDataBridge managedObjectContext];
     }
     return _managedObjectContext;
 }

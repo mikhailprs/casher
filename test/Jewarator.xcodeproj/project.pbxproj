@@ -134,6 +134,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		545BE7C41CF3072000BEE93B /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Entities;
+			sourceTree = "<group>";
+		};
 		546746C71C7EEF6B00113990 = {
 			isa = PBXGroup;
 			children = (
@@ -155,6 +162,7 @@
 		546746D21C7EEF6B00113990 /* test */ = {
 			isa = PBXGroup;
 			children = (
+				545BE7C41CF3072000BEE93B /* Entities */,
 				C225D80F1C88DE8300B933FF /* Helpers */,
 				546746F91C7EF4BC00113990 /* CoreData Entities */,
 				546747141C7F09A400113990 /* xib */,
