@@ -1,13 +1,10 @@
 PODS:
-  - Backendless (0.0.1)
   - Masonry (1.0.0)
 
 DEPENDENCIES:
-  - Backendless
   - Masonry
 
 SPEC CHECKSUMS:
-  Backendless: a117f832fdbb4fbaf6fd3d66305f758e327cdd6e
   Masonry: b529bb169217897b6354d4b56b1fada6d475b13d
 
 COCOAPODS: 0.39.0

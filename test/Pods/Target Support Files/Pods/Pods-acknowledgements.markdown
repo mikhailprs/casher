@@ -1,10 +1,6 @@
 # Acknowledgements
 This application makes use of the following third party libraries:
 
-## Backendless
-
-Copyright (c) 2012-2014 by Backendless.com
-
 ## Masonry
 
 Copyright (c) 2011-2012 Masonry Team - https://github.com/Masonry
