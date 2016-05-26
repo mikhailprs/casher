@@ -15,7 +15,7 @@
 
 @interface MPChartViewController ()
 
-@property (strong, nonatomic) PNBarChart *pieChart;
+@property (strong, nonatomic) PNPieChart *pieChart;
 @property (strong, nonatomic) NSArray *dataSource;
 
 @end
@@ -41,18 +41,24 @@
 #pragma mark - accessors
 
 - (void)initStartUp{
-    [self.view setBackgroundColor:[UIColor grayColor]];
+    [self.view setBackgroundColor:[UIColor whiteColor]];
     [self createUI];
     [self makeConstraints];
 }
 
 - (void)createUI{
-    _pieChart = [[PNBarChart alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
     [self.view addSubview:self.pieChart];
-    [self.pieChart setXLabels:@[@"SEP 1",@"SEP 2",@"SEP 3",@"SEP 4",@"SEP 5"]];
-    [self.pieChart setYValues:@[@1,  @10, @2, @6, @3]];
-    [self.pieChart strokeChart];
-}
+    NSArray *items = @[[PNPieChartDataItem dataItemWithValue:10 color:PNRed],
+                       [PNPieChartDataItem dataItemWithValue:20 color:PNBlue description:@"WWDC"],
+                       [PNPieChartDataItem dataItemWithValue:40 color:PNGreen description:@"GOOL I/O"],
+                       ];
+    
+    
+    _pieChart = [[PNPieChart alloc] initWithFrame:CGRectMake(0, 0, 200, 200) items:items];
+    [self.view addSubview:self.pieChart];
+    _pieChart.descriptionTextColor = [UIColor whiteColor];
+    _pieChart.descriptionTextFont  = [UIFont fontWithName:@"Avenir-Medium" size:14.0];
+    [_pieChart strokeChart];}
 
 - (void)makeConstraints{
     [self.pieChart mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -68,8 +74,16 @@
     AppDelegate *delegate = [UIApplication sharedApplication].delegate;
     NSManagedObjectContext *context = [delegate.coreDataBridge managedObjectContext];
     NSArray *results = [context executeFetchRequest:request error:&error];
-    NSLog(@"%lu",(unsigned long)results.count);
-
+    id sum = [results valueForKeyPath:@"@sum.trans_amount"];
+    
+    self.pieChart.legendStyle = PNLegendItemStyleSerial;
+    UIView *legend = [self.pieChart getLegendWithMaxWidth:200];
+    
+    //Move legend to the desired position and add to view
+    [legend setFrame:CGRectMake(130, 350, legend.frame.size.width, legend.frame.size.height)];
+    [self.view addSubview:legend];
+//    NSLog(@"%lu",(unsigned long)results.count);
+    
 }
 
 @end
