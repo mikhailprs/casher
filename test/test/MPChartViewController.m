@@ -12,6 +12,7 @@
 #import <CoreData/CoreData.h>
 #import "Transaction+CoreDataProperties.h"
 #import "AppDelegate.h"
+#import "MPExtension.h"
 
 @interface MPChartViewController ()
 
@@ -20,7 +21,7 @@
 
 @end
 
-
+typedef void (^CompletitionResult)(NSArray *result);
 
 @implementation MPChartViewController
 
@@ -29,7 +30,6 @@
 
 - (void)viewDidLoad{
     [self initStartUp];
-    [self initDataSource];
     
 }
 
@@ -48,18 +48,22 @@
 
 - (void)createUI{
     [self.view addSubview:self.pieChart];
-    NSArray *items = @[[PNPieChartDataItem dataItemWithValue:10 color:PNRed],
-                       [PNPieChartDataItem dataItemWithValue:20 color:PNBlue description:@"WWDC"],
-                       [PNPieChartDataItem dataItemWithValue:40 color:PNGreen description:@"GOOL I/O"],
-                       ];
+    [self getData:^(NSArray *result) {
+        NSInteger value = [result.firstObject integerValue];
+        NSArray *items = @[[PNPieChartDataItem dataItemWithValue:value color:PNRed],
+                           [PNPieChartDataItem dataItemWithValue:value  color:PNBlue description:@"WWDC"],
+                           [PNPieChartDataItem dataItemWithValue:value color:PNGreen description:@"GOOL I/O"],
+                           ];
+        
+        
+        _pieChart = [[PNPieChart alloc] initWithFrame:CGRectMake(0, 0, 200, 200) items:items];
+        [self.view addSubview:self.pieChart];
+        _pieChart.descriptionTextColor = [UIColor whiteColor];
+        _pieChart.descriptionTextFont  = [UIFont fontWithName:@"Avenir-Medium" size:14.0];
+        [_pieChart strokeChart];
+    }];
+    }
     
-    
-    _pieChart = [[PNPieChart alloc] initWithFrame:CGRectMake(0, 0, 200, 200) items:items];
-    [self.view addSubview:self.pieChart];
-    _pieChart.descriptionTextColor = [UIColor whiteColor];
-    _pieChart.descriptionTextFont  = [UIFont fontWithName:@"Avenir-Medium" size:14.0];
-    [_pieChart strokeChart];}
-
 - (void)makeConstraints{
     [self.pieChart mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.height.equalTo(@(200.));
@@ -67,23 +71,33 @@
     }];
 }
 
-- (void)initDataSource{
+
+- (void)getData:(CompletitionResult)completition{
+    dispatch_queue_t queueExecuter = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
+    dispatch_queue_t mainQueueq = dispatch_get_main_queue();
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"Transaction"];
     
-    NSError *error = nil;
     AppDelegate *delegate = [UIApplication sharedApplication].delegate;
     NSManagedObjectContext *context = [delegate.coreDataBridge managedObjectContext];
-    NSArray *results = [context executeFetchRequest:request error:&error];
-    id sum = [results valueForKeyPath:@"@sum.trans_amount"];
-    
-    self.pieChart.legendStyle = PNLegendItemStyleSerial;
-    UIView *legend = [self.pieChart getLegendWithMaxWidth:200];
-    
-    //Move legend to the desired position and add to view
-    [legend setFrame:CGRectMake(130, 350, legend.frame.size.width, legend.frame.size.height)];
-    [self.view addSubview:legend];
-//    NSLog(@"%lu",(unsigned long)results.count);
+
+    dispatch_async(queueExecuter, ^{
+        NSMutableArray *array = [NSMutableArray new];
+        for (int i = 0 ; i <=2; i ++){
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:
+                                      @"trans_type like %@", [NSString stringWithFormat:@"%d",i]];
+            [request setPredicate:predicate];
+            NSArray *results = [context executeFetchRequest:request error:nil];
+            id sum = [results valueForKeyPath:@"@sum.trans_amount"];
+            [array addObject:sum];
+        }
+        if (completition){
+            dispatch_async(mainQueueq, ^{
+                completition([array copy]);
+            });
+        }
+    });
     
 }
+
 
 @end
