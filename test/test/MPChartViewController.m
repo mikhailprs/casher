@@ -14,7 +14,7 @@
 #import "AppDelegate.h"
 #import "MPExtension.h"
 
-@interface MPChartViewController ()
+@interface MPChartViewController () <PNChartDelegate>
 
 @property (strong, nonatomic) PNPieChart *pieChart;
 @property (strong, nonatomic) NSArray *dataSource;
@@ -49,14 +49,16 @@ typedef void (^CompletitionResult)(NSArray *result);
 - (void)createUI{
     [self.view addSubview:self.pieChart];
     [self getData:^(NSArray *result) {
-        NSInteger value = [result.firstObject integerValue];
-        NSArray *items = @[[PNPieChartDataItem dataItemWithValue:value color:PNRed],
-                           [PNPieChartDataItem dataItemWithValue:value  color:PNBlue description:@"WWDC"],
-                           [PNPieChartDataItem dataItemWithValue:value color:PNGreen description:@"GOOL I/O"],
+        _dataSource = result;
+        
+        NSArray *items = @[[PNPieChartDataItem dataItemWithValue:[result[0] doubleValue] color:PNRed],
+                           [PNPieChartDataItem dataItemWithValue:[result[1] doubleValue]  color:PNBlue description:@"WWDC"],
+                           [PNPieChartDataItem dataItemWithValue:[result[2] doubleValue] color:PNGreen description:@"GOOL I/O"],
                            ];
         
         
-        _pieChart = [[PNPieChart alloc] initWithFrame:CGRectMake(0, 0, 200, 200) items:items];
+        _pieChart = [[PNPieChart alloc] initWithFrame:CGRectMake(50, 50, 200, 200) items:items];
+        _pieChart.delegate = self;
         [self.view addSubview:self.pieChart];
         _pieChart.descriptionTextColor = [UIColor whiteColor];
         _pieChart.descriptionTextFont  = [UIFont fontWithName:@"Avenir-Medium" size:14.0];
@@ -65,8 +67,7 @@ typedef void (^CompletitionResult)(NSArray *result);
     }
     
 - (void)makeConstraints{
-    [self.pieChart mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.width.height.equalTo(@(200.));
+    [self.pieChart mas_makeConstraints:^(MASConstraintMaker *make){
         make.centerX.centerY.equalTo(self.view);
     }];
 }
@@ -82,7 +83,7 @@ typedef void (^CompletitionResult)(NSArray *result);
 
     dispatch_async(queueExecuter, ^{
         NSMutableArray *array = [NSMutableArray new];
-        for (int i = 0 ; i <=2; i ++){
+        for (int i = 0 ; i <= 2; i ++){
             NSPredicate *predicate = [NSPredicate predicateWithFormat:
                                       @"trans_type like %@", [NSString stringWithFormat:@"%d",i]];
             [request setPredicate:predicate];
@@ -96,7 +97,17 @@ typedef void (^CompletitionResult)(NSArray *result);
             });
         }
     });
-    
+}
+
+
+- (void)userClickedOnPieIndexItem:(NSInteger)pieIndex{
+    NSArray *items = @[[PNPieChartDataItem dataItemWithValue:5 color:PNRed],
+                       [PNPieChartDataItem dataItemWithValue:6  color:PNBlue description:@"WWDC"],
+                       [PNPieChartDataItem dataItemWithValue:7 color:PNGreen description:@"GOOL I/O"],
+                       ];
+    [_pieChart updateChartData:items];
+    [_pieChart strokeChart];
+
 }
 
 
