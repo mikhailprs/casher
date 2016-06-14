@@ -65,7 +65,7 @@
 #pragma mark - init methods
 
 - (void)initDefaultValues{
-    _transactionType = MPVodka;
+    _transactionType = Products;
 }
 
 #pragma mark - init UI

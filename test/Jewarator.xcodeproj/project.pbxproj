@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5439AF221D0AFF47009F2D9F /* MPCalendarHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5439AF211D0AFF47009F2D9F /* MPCalendarHelper.m */; };
 		543A02851C80901800305903 /* MPStatisticView.m in Sources */ = {isa = PBXBuildFile; fileRef = 543A02841C80901800305903 /* MPStatisticView.m */; };
 		544A83921C9172E30082275E /* MPTransTypeSwitcherView.m in Sources */ = {isa = PBXBuildFile; fileRef = 544A83911C9172E30082275E /* MPTransTypeSwitcherView.m */; };
 		544A83951C91AAEE0082275E /* MPExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 544A83941C91AAEE0082275E /* MPExtension.m */; };
@@ -24,6 +25,7 @@
 		546747121C7EFFC000113990 /* MPDashboardBottomCellCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 546747101C7EFFC000113990 /* MPDashboardBottomCellCollectionViewCell.m */; };
 		546747131C7EFFC000113990 /* MPDashboardBottomCellCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 546747111C7EFFC000113990 /* MPDashboardBottomCellCollectionViewCell.xib */; };
 		546747191C7F2B5100113990 /* MPAddingTransactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 546747181C7F2B5100113990 /* MPAddingTransactViewController.m */; };
+		5478167C1D0ED7CA0035C64C /* NSManagedObjectContext+SRFetchAsync.m in Sources */ = {isa = PBXBuildFile; fileRef = 5478167B1D0ED7CA0035C64C /* NSManagedObjectContext+SRFetchAsync.m */; };
 		A1C1432C33C31E9B02CC4D51 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C3F2D01B2EAA598E1851CDF /* libPods.a */; };
 		C21BAFC31CB9A88400E6DC20 /* NSDate+Formatter.m in Sources */ = {isa = PBXBuildFile; fileRef = C21BAFC21CB9A88400E6DC20 /* NSDate+Formatter.m */; };
 		C21BAFCC1CBA863600E6DC20 /* MPColorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C21BAFCB1CBA863600E6DC20 /* MPColorManager.m */; };
@@ -48,6 +50,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5439AF201D0AFF47009F2D9F /* MPCalendarHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPCalendarHelper.h; sourceTree = "<group>"; };
+		5439AF211D0AFF47009F2D9F /* MPCalendarHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPCalendarHelper.m; sourceTree = "<group>"; };
 		543A02831C80901800305903 /* MPStatisticView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPStatisticView.h; sourceTree = "<group>"; };
 		543A02841C80901800305903 /* MPStatisticView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPStatisticView.m; sourceTree = "<group>"; };
 		544A838F1C9167810082275E /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
@@ -79,6 +83,8 @@
 		546747111C7EFFC000113990 /* MPDashboardBottomCellCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MPDashboardBottomCellCollectionViewCell.xib; sourceTree = "<group>"; };
 		546747171C7F2B5100113990 /* MPAddingTransactViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPAddingTransactViewController.h; sourceTree = "<group>"; };
 		546747181C7F2B5100113990 /* MPAddingTransactViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPAddingTransactViewController.m; sourceTree = "<group>"; };
+		5478167A1D0ED7CA0035C64C /* NSManagedObjectContext+SRFetchAsync.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObjectContext+SRFetchAsync.h"; sourceTree = "<group>"; };
+		5478167B1D0ED7CA0035C64C /* NSManagedObjectContext+SRFetchAsync.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObjectContext+SRFetchAsync.m"; sourceTree = "<group>"; };
 		6C3F2D01B2EAA598E1851CDF /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		6DA6664E7D2064BBB91E190C /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		8E5AFD792099C1CB57AAF077 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
@@ -149,6 +155,8 @@
 			children = (
 				545BE7C61CF3205F00BEE93B /* MPChartViewController.h */,
 				545BE7C71CF3205F00BEE93B /* MPChartViewController.m */,
+				5439AF201D0AFF47009F2D9F /* MPCalendarHelper.h */,
+				5439AF211D0AFF47009F2D9F /* MPCalendarHelper.m */,
 			);
 			name = ChartViewController;
 			sourceTree = "<group>";
@@ -350,6 +358,8 @@
 				C21BAFCE1CBA870100E6DC20 /* UIColor+HexColor.m */,
 				545BE7C11CF2EE3600BEE93B /* MPCoredataBridge.h */,
 				545BE7C21CF2EE3600BEE93B /* MPCoredataBridge.m */,
+				5478167A1D0ED7CA0035C64C /* NSManagedObjectContext+SRFetchAsync.h */,
+				5478167B1D0ED7CA0035C64C /* NSManagedObjectContext+SRFetchAsync.m */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -495,10 +505,12 @@
 				546747081C7EFC2300113990 /* MPDashBoardBottomView.m in Sources */,
 				546746DB1C7EEF6B00113990 /* ViewController.m in Sources */,
 				C21BAFCC1CBA863600E6DC20 /* MPColorManager.m in Sources */,
+				5478167C1D0ED7CA0035C64C /* NSManagedObjectContext+SRFetchAsync.m in Sources */,
 				C28A69E31C9D7BEF00A27814 /* Earning.m in Sources */,
 				546746E11C7EEF6B00113990 /* test.xcdatamodeld in Sources */,
 				C21BAFD51CBAD58B00E6DC20 /* MPAlertAction.m in Sources */,
 				C2E76E751CA6BABB00C770E2 /* MPEarningHistoryCell.m in Sources */,
+				5439AF221D0AFF47009F2D9F /* MPCalendarHelper.m in Sources */,
 				546747191C7F2B5100113990 /* MPAddingTransactViewController.m in Sources */,
 				C28A69DC1C9D7BEF00A27814 /* Transaction+CoreDataProperties.m in Sources */,
 				545BE7C31CF2EE3600BEE93B /* MPCoredataBridge.m in Sources */,

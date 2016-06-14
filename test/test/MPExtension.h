@@ -8,8 +8,16 @@
 
 #import <Foundation/Foundation.h>
 
+typedef enum {
+    Products          = 0,
+    Sport           = 1,
+    Party           = 2,
+    Kartoha         = 3,
+} MPTransactionType;
+
 @interface MPExtension : NSObject
 
 + (NSArray *)getTransactionTypes;
++ (NSInteger)getTransactionCount;
 
 @end

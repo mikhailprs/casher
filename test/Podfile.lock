@@ -1,14 +1,17 @@
 PODS:
+  - DCAnimationKit (0.0.6)
   - Masonry (1.0.0)
   - PNChart (0.8.8):
     - UICountingLabel (~> 1.2.0)
   - UICountingLabel (1.2.0)
 
 DEPENDENCIES:
+  - DCAnimationKit
   - Masonry
   - PNChart
 
 SPEC CHECKSUMS:
+  DCAnimationKit: 7133bef877ce1aa113dcfeea1380ca67f91f7608
   Masonry: b529bb169217897b6354d4b56b1fada6d475b13d
   PNChart: 25f91e9c4688af49c3647489760624d037f5383f
   UICountingLabel: 1db4e7d023e1762171eb226d6dff47a7a84f27aa

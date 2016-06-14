@@ -16,6 +16,7 @@
 #import "NSDate+Formatter.h"
 #import "AppDelegate.h"
 
+
 @interface MPTransactionsHistoryViewController () <NSFetchedResultsControllerDelegate>
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;

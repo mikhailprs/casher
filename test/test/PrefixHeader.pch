@@ -16,13 +16,8 @@
 
 // вообще лучше пренести это в отдельный .h файл и затем импортировать его сюда
 
-typedef enum {
-    MPVodka               = 0,
-    MPPivo                = 1,
-    MPKartoha             = 2,
-} MPTransactionType;
-#endif /* PrefixHeader_pch */
 
+#endif /* PrefixHeader_pch */
 
 //
 //  Prefix header

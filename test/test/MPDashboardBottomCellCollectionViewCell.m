@@ -59,7 +59,7 @@
 //            imageName = @"bottomCellDeposit";
             break;}
         case OPTKBottomTypeCellOrders:{
-            textForLabel = @"NULL";
+            textForLabel = @"Statistic";
 //            imageName = @"bottomCellOrders";
             break;}
         case OPTKBottomTypeCellPriceAlerts:{

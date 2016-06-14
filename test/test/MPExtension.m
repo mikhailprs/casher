@@ -12,8 +12,12 @@
 
 + (NSArray *)getTransactionTypes{
     NSArray *array = [NSArray arrayWithObjects:@"Products",
-                      @"Sport",@"Party",nil];
+                      @"Sport",@"Party",@"Kartoha",nil];
     return array;
+}
+
++ (NSInteger)getTransactionCount{
+    return 4;
 }
 
 @end
