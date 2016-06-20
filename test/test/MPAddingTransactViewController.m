@@ -79,6 +79,7 @@
 
 - (void)createInputView{
     _view_input = [[MPInputTextView alloc] init];
+    self.view_input.tf_amount.delegate = self;
     [self.view addSubview:self.view_input];
     [self.view_input.lbl_titile setText:@"Enter amount"];
 }
@@ -275,6 +276,34 @@
 - (void)transactionTypeSwitcherView:(MPTransTypeSwitcherView *)view didSelectedValueAtIndex:(NSInteger)idx{
     NSLog(@"%ld",(long)idx);
     _transactionType = (MPTransactionType)idx;
+}
+
+
+
+#pragma mark - UITextFieldDelegate
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    if([textField isEditing]){
+        [textField resignFirstResponder];
+    }
+    return YES;
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if(string.length > 0)
+    {
+        NSCharacterSet *numbersOnly = [NSCharacterSet characterSetWithCharactersInString:@"0123456789"];
+        NSCharacterSet *characterSetFromTextField = [NSCharacterSet characterSetWithCharactersInString:string];
+        
+        BOOL stringIsValid = [numbersOnly isSupersetOfSet:characterSetFromTextField];
+        return stringIsValid;
+    }
+    return YES;
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    [textField resignFirstResponder];
 }
 
 

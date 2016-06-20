@@ -16,16 +16,25 @@
 #import "MPCalendarHelper.h"
 #import "NSManagedObjectContext+SRFetchAsync.h"
 #import "UIView+DCAnimationKit.h"
+#import "MPCountingLine.h"
+#import "NSDate+Formatter.h"
 
 @interface MPChartViewController () <PNChartDelegate>
 
-@property (strong, nonatomic) PNPieChart *pieChart;
-@property (strong, nonatomic) NSArray *dataSource;
-@property (strong, nonatomic) UISegmentedControl *segmentControl;
-@property (strong, nonatomic) MPCalendarHelper *calendarHelper;
-@property (strong, nonatomic) UILabel *moveLabel;
-@property (strong, nonatomic) UIView *moveView;
 
+@property (strong, nonatomic) UIScrollView *scrollView;
+@property (strong, nonatomic) UISegmentedControl *segmentControl;
+@property (strong, nonatomic) PNPieChart *pieChart;
+@property (strong, nonatomic) MPCountingLine *products;
+@property (strong, nonatomic) MPCountingLine *sport;
+@property (strong, nonatomic) MPCountingLine *party;
+@property (strong, nonatomic) MPCountingLine *kartoha;
+@property (strong, nonatomic) UILabel *moveLabel;
+
+
+@property (strong, nonatomic) NSString *textTemplate;
+@property (strong, nonatomic) NSArray *dataSource;
+@property (strong, nonatomic) MPCalendarHelper *calendarHelper;
 @end
 
 
@@ -36,7 +45,7 @@
 
 - (void)viewDidLoad{
     [self initStartUp];
-    [self getDataByPeriod:MPDay];
+    [self getDataByPeriod:MPWeek];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -54,7 +63,6 @@
         NSArray *data = [dataSource filteredArrayUsingPredicate:predicate];
         [array addObject:[data valueForKeyPath:@"@sum.trans_amount"]];
     }
-    
     _dataSource = [array copy];
     [self updateChartView];
 }
@@ -66,6 +74,18 @@
     return _calendarHelper;
 }
 
+- (NSString *)textTemplate{
+    if (!_textTemplate){
+        _textTemplate = @"Maximum waste for this period is: %@\n it was on :%@";
+    }
+    return _textTemplate;
+}
+
+
+
+
+
+#pragma mark - make UI
 
 - (void)initStartUp{
     [self.view setBackgroundColor:[UIColor whiteColor]];
@@ -73,17 +93,12 @@
     [self makeConstraints];
 }
 
-
-#pragma mark - make UI
-
 - (void)createUI{
-    NSArray *items = @[[PNPieChartDataItem dataItemWithValue:10 color:PNRed],
-                       [PNPieChartDataItem dataItemWithValue:20 color:PNBlue description:@"WWDC"],
-                       [PNPieChartDataItem dataItemWithValue:40 color:PNGreen description:@"GOOL I/O"],
-                       ];
-    _pieChart = [[PNPieChart alloc] initWithFrame:CGRectMake(0, 0, 0, 0) items:items];
+    _scrollView = [[UIScrollView alloc] init];
+    [self.view addSubview:self.scrollView];
+    _pieChart = [[PNPieChart alloc] initWithFrame:CGRectMake(0, 0, 0, 0) items:nil];
     self.pieChart.labelPercentageCutoff = 0.05;
-    [self.view addSubview:_pieChart];
+    [self.scrollView addSubview:_pieChart];
 
     _pieChart.delegate = self;
 
@@ -96,40 +111,59 @@
     [self.segmentControl addTarget:self
                             action:@selector(action:)
                   forControlEvents:UIControlEventValueChanged];
-    [self.view addSubview:self.segmentControl];
+    [self.scrollView addSubview:self.segmentControl];
+    [self makeCountingStatisticView];
     [self createAnimationView];
+
+    
+    
 }
 
 
 - (void)createAnimationView{
-    self.moveLabel = [[UILabel alloc] initWithFrame:CGRectMake(80, 85, 200, 100)];
+    self.moveLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     self.moveLabel.backgroundColor = [UIColor clearColor];
-    self.moveLabel.font = [UIFont systemFontOfSize:36];
+    self.moveLabel.textAlignment = NSTextAlignmentCenter;
+    self.moveLabel.numberOfLines = 2;
+    self.moveLabel.adjustsFontSizeToFitWidth = YES;
 //    [self.moveLabel sizeToFit];
-    [self.view addSubview:self.moveLabel];
-    
-    self.moveView = [[UIView alloc] initWithFrame:CGRectMake(40, 165, 200, 100)];
-    self.moveView.backgroundColor = [UIColor orangeColor];
-    [self.moveView setHidden:YES];
     [self.moveLabel setHidden:YES];
-    [self.view addSubview:self.moveView];
+    [self.scrollView addSubview:self.moveLabel];
+    
+    [self.moveLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.view);
+        make.width.equalTo(self.view.mas_width);
+        make.height.equalTo(@100.f);
+        make.top.equalTo(self.kartoha.mas_bottom);
+        make.bottom.equalTo(self.scrollView.mas_bottom).with.offset(-10);
+
+    }];
+    
 }
     
 - (void)makeConstraints{
-    [self.pieChart mas_makeConstraints:^(MASConstraintMaker *make){
-//        make.centerX.centerY.equalTo(self.view);
-//        make.left.right.top.bottom.equalTo(self.view).with.offset(0.f);
-        make.height.width.equalTo(@300);
-        make.centerX.centerY.equalTo(self.view);
+    
+    [self.scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.left.right.bottom.equalTo(self.view);
     }];
     
-    
     [self.segmentControl mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(self.pieChart.mas_top).with.offset(-20.f);
+        make.top.equalTo(self.scrollView.mas_top).with.offset(40.f);
         make.centerX.equalTo(self.pieChart.mas_centerX);
         make.height.equalTo(@40.);
         make.width.equalTo(@300.f);
     }];
+    
+    [self.pieChart mas_makeConstraints:^(MASConstraintMaker *make){
+//        make.centerX.centerY.equalTo(self.view);
+//        make.left.right.top.bottom.equalTo(self.view).with.offset(0.f);
+        make.height.width.equalTo(@300);
+        make.centerX.equalTo(self.view);
+        make.top.equalTo(self.segmentControl.mas_bottom).with.offset(20.f);
+    }];
+    
+    
+
 }
 
 - (void)addLegend{
@@ -149,6 +183,50 @@
 
 }
 
+
+- (void)makeCountingStatisticView{
+    _products = [[MPCountingLine alloc] init];
+    self.products.title.text = @"Products";
+    self.products.value.format = @"%.0f%";
+    _sport = [[MPCountingLine alloc] init];
+    self.sport.title.text = @"Sport";
+    self.sport.value.format = @"%.0f%";
+    _party = [[MPCountingLine alloc] init];
+    self.party.title.text = @"Party";
+    self.party.value.format = @"%.0f%";
+    _kartoha = [[MPCountingLine alloc] init];
+    self.kartoha.title.text = @"Kartoha";
+    self.kartoha.value.format = @"%.0f%";
+    
+    [self.view addSubview:self.products];
+    [self.view addSubview:self.sport];
+    [self.view addSubview:self.party];
+    [self.view addSubview:self.kartoha];
+    
+    [self.products mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.equalTo(self.view);
+        make.height.equalTo(@30);
+        make.top.equalTo(self.pieChart.mas_bottom).with.offset(30.f);
+    }];
+    
+    [self.sport mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.equalTo(self.view);
+        make.height.equalTo(@30);
+        make.top.equalTo(self.products.mas_bottom).with.offset(10.f);
+    }];
+    
+    [self.party mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.equalTo(self.view);
+        make.height.equalTo(@30);
+        make.top.equalTo(self.sport.mas_bottom).with.offset(10.f);
+    }];
+    
+    [self.kartoha mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.equalTo(self.view);
+        make.height.equalTo(@30);
+        make.top.equalTo(self.party.mas_bottom).with.offset(10.f);
+    }];
+}
 
 - (void)getDataByPeriod:(MPPeriodType)period{
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"Transaction"];
@@ -172,10 +250,19 @@
     [_pieChart updateChartData:items];
     [_pieChart strokeChart];
     [self addLegend];
+    
+    [self.products.value countFromCurrentValueTo:[self.dataSource[0] floatValue]];
+    [self.sport.value countFromCurrentValueTo:[self.dataSource[1] floatValue]];
+    [self.party.value countFromCurrentValueTo:[self.dataSource[2] floatValue]];
+    [self.kartoha.value countFromCurrentValueTo:[self.dataSource[3] floatValue]];
+    
 }
+
+
 
 - (void)action:(id)sender{
     UISegmentedControl *segmentControl = (id)sender;
+    [self.moveLabel setHidden:YES];
     [self getDataByPeriod:(MPPeriodType)segmentControl.selectedSegmentIndex];
 //    NSArray *results = [context executeFetchRequest:request error:nil];
 //    id sum = [results valueForKeyPath:@"@sum.trans_amount"];
@@ -185,17 +272,50 @@
 
 - (void)userClickedOnPieIndexItem:(NSInteger)pieIndex{
     id sum = _dataSource[pieIndex];
-    self.moveLabel.text = [NSString stringWithFormat:@"%@",sum];
-    if (![self.moveView isHidden]){
-        [self.moveView swing:NULL];
+    if (![self.moveLabel isHidden]){
         [self.moveLabel swing:NULL];
     }else{
-        [self.moveView setHidden:NO];
         [self.moveLabel setHidden:NO];
-        [self.moveLabel snapIntoView:self.view direction:DCAnimationDirectionTop];
-        [self.moveView snapIntoView:self.view direction:DCAnimationDirectionLeft];
-
+        [self.moveLabel snapIntoView:self.scrollView direction:DCAnimationDirectionBottom];
     }
+    [self anotherFetch:pieIndex];
+    
+}
+
+- (void)anotherFetch:(NSInteger)index{
+    NSMutableArray *compaundPredicate = [NSMutableArray new];
+    
+    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"Transaction"];
+    NSPredicate *predicate = [self.calendarHelper periodInterval:(MPPeriodType)self.segmentControl.selectedSegmentIndex];
+    if (predicate) [compaundPredicate addObject:predicate];
+    NSPredicate *predicate2 = [NSPredicate predicateWithFormat:@"trans_type = %d",index];
+    if (predicate2) [compaundPredicate addObject:predicate2];
+//    NSPredicate *predicate3 = [NSPredicate predicateWithFormat:@"trans_amount == max(trans_amount)"];
+    NSCompoundPredicate *compoundPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:compaundPredicate];
+    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+    [request setPredicate:compoundPredicate];
+    NSManagedObjectContext *context = [delegate.coreDataBridge managedObjectContext];
+    __weak typeof (self) wSelf = self;
+    [context executeAsyncFetchRequest:request completion:^(NSArray *objects, NSError *error) {
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"trans_amount == max(trans_amount)"];
+        
+        NSArray *mutable = [objects sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
+            Transaction *trans1 = obj1;
+            Transaction *trans2 = obj2;
+            if (trans1.trans_amount > trans2.trans_amount){
+                return NSOrderedAscending;
+            }else{
+                return NSOrderedDescending;
+            }
+        }];
+        Transaction *neededValue = mutable.firstObject;
+        NSString *date = neededValue.trans_time.getFormattedGMTTimeWithoutYear;
+        if (neededValue.trans_location){
+            date = [date stringByAppendingString:neededValue.trans_location];
+        }
+        self.moveLabel.text = [NSString stringWithFormat:self.textTemplate, neededValue.trans_amount, date];
+    }];
+    
 }
 
 

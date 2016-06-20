@@ -59,8 +59,7 @@
 
 - (void)createInputView{
     _view_input = [[MPInputTextView alloc] init];
-    [self.view_input.tf_amount setDelegate:self];\
-//    [self.view_input.tf_amount setKeyboardType:UIKeyboardTypeNumberPad];
+    [self.view_input.tf_amount setDelegate:self];
     [self.view_input.lbl_titile setText:@"Earning:"];
     [self.view addSubview:self.view_input];
 }
@@ -106,6 +105,12 @@
 
 - (void)confirnAction{
     if ([self.view_input.tf_amount.text isEqualToString:@""]){
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Field is empty" message:@"Try again" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *action = [UIAlertAction actionWithTitle:@"OK" style:nil handler:nil];
+        [alertController addAction:action];
+        [self.btn_confirm setHighlighted:NO];
+        [self presentViewController:alertController animated:YES completion:nil];
+
         return;
     }
     Earning *earning = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([Earning class]) inManagedObjectContext:self.context];
@@ -179,7 +184,7 @@
     if([textField isEditing]){
         [textField resignFirstResponder];
     }
-    return NO;
+    return YES;
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
@@ -193,5 +198,9 @@
         return stringIsValid;
     }
     return YES;
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    [textField resignFirstResponder];
 }
 @end

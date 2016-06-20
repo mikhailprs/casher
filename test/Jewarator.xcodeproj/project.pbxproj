@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5438F1171D113CDA00766D17 /* MPCountingLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 5438F1161D113CDA00766D17 /* MPCountingLine.m */; };
 		5439AF221D0AFF47009F2D9F /* MPCalendarHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5439AF211D0AFF47009F2D9F /* MPCalendarHelper.m */; };
 		543A02851C80901800305903 /* MPStatisticView.m in Sources */ = {isa = PBXBuildFile; fileRef = 543A02841C80901800305903 /* MPStatisticView.m */; };
 		544A83921C9172E30082275E /* MPTransTypeSwitcherView.m in Sources */ = {isa = PBXBuildFile; fileRef = 544A83911C9172E30082275E /* MPTransTypeSwitcherView.m */; };
@@ -50,6 +51,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5438F1151D113CDA00766D17 /* MPCountingLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPCountingLine.h; sourceTree = "<group>"; };
+		5438F1161D113CDA00766D17 /* MPCountingLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPCountingLine.m; sourceTree = "<group>"; };
 		5439AF201D0AFF47009F2D9F /* MPCalendarHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPCalendarHelper.h; sourceTree = "<group>"; };
 		5439AF211D0AFF47009F2D9F /* MPCalendarHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPCalendarHelper.m; sourceTree = "<group>"; };
 		543A02831C80901800305903 /* MPStatisticView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPStatisticView.h; sourceTree = "<group>"; };
@@ -375,6 +378,8 @@
 				C21BAFD11CBA915A00E6DC20 /* MPButton.m */,
 				C21BAFD31CBAD58B00E6DC20 /* MPAlertAction.h */,
 				C21BAFD41CBAD58B00E6DC20 /* MPAlertAction.m */,
+				5438F1151D113CDA00766D17 /* MPCountingLine.h */,
+				5438F1161D113CDA00766D17 /* MPCountingLine.m */,
 			);
 			name = TransactionVies;
 			sourceTree = "<group>";
@@ -507,6 +512,7 @@
 				C21BAFCC1CBA863600E6DC20 /* MPColorManager.m in Sources */,
 				5478167C1D0ED7CA0035C64C /* NSManagedObjectContext+SRFetchAsync.m in Sources */,
 				C28A69E31C9D7BEF00A27814 /* Earning.m in Sources */,
+				5438F1171D113CDA00766D17 /* MPCountingLine.m in Sources */,
 				546746E11C7EEF6B00113990 /* test.xcdatamodeld in Sources */,
 				C21BAFD51CBAD58B00E6DC20 /* MPAlertAction.m in Sources */,
 				C2E76E751CA6BABB00C770E2 /* MPEarningHistoryCell.m in Sources */,

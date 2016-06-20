@@ -10,9 +10,10 @@
 
 
 typedef enum {
-    MPDay      = 0,
-    MPWeek     = 1,
-    MPMonth    = 2,
+    MPWeek          = 0,
+    MPMonth         = 1,
+    MPLastEarn      = 2,
+    MPAllTime       = 3,
 } MPPeriodType;
 
 @interface MPCalendarHelper : NSObject
