@@ -57,6 +57,16 @@ install_resource()
       ;;
   esac
 }
+if [[ "$CONFIGURATION" == "Debug" ]]; then
+  install_resource "DCPathButton/DCPathButton/Sounds/bloom.caf"
+  install_resource "DCPathButton/DCPathButton/Sounds/fold.caf"
+  install_resource "DCPathButton/DCPathButton/Sounds/selected.caf"
+fi
+if [[ "$CONFIGURATION" == "Release" ]]; then
+  install_resource "DCPathButton/DCPathButton/Sounds/bloom.caf"
+  install_resource "DCPathButton/DCPathButton/Sounds/fold.caf"
+  install_resource "DCPathButton/DCPathButton/Sounds/selected.caf"
+fi
 
 mkdir -p "${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}"
 rsync -avr --copy-links --no-relative --exclude '*/.svn/*' --files-from="$RESOURCES_TO_COPY" / "${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}"

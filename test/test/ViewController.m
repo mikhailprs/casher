@@ -20,12 +20,15 @@
 #import "MPAddingEarningViewController.h"
 #import "MPDashBoardBottomView.h"
 #import "MPChartViewController.h"
+#import "MPAlertAction.h"
+#import "DCPathButton.h"
 
 
 
-@interface ViewController () <MPDashBoardBottomViewDelegate>
+@interface ViewController () <MPDashBoardBottomViewDelegate, DCPathButtonDelegate>
 
 @property (strong , nonatomic) NSManagedObjectContext *context;
+@property (strong, nonatomic) DCPathButton *keeperButton;
 
 @end
 
@@ -41,7 +44,7 @@
     [self makeConstraints];
     [self initDelegates];
     [self initText];
-    // Do any additional setup after loading the view, typically from a nib.
+    
 }
 
 
@@ -52,6 +55,7 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [self initDataSource];
+    
 }
 
 
@@ -72,8 +76,93 @@
 - (void)makeUI {
     [self initBottomCollectionView];
     [self initAvailableView];
+    UIBarButtonItem *flipButton = [[UIBarButtonItem alloc]
+                                   initWithTitle:@"Clear"
+                                   style:UIBarButtonItemStylePlain
+                                   target:self
+                                   action:@selector(clearDB)]; // пока что по убогому сразу все / затем заменить на отдельные
+    self.navigationItem.rightBarButtonItem = flipButton;
+    
+    UIImage *image = [UIImage imageNamed:@"plus"];
+    UIImage *imageHighlited = [UIImage imageNamed:@"lightbulb"];
+    _keeperButton = [[DCPathButton alloc] initWithCenterImage:image highlightedImage:imageHighlited];
+    _keeperButton = [[DCPathButton alloc] initWithButtonFrame:CGRectMake(0, 0, 40, 40) centerImage:image highlightedImage:imageHighlited];
+    self.keeperButton.bloomRadius = 100;
+    self.keeperButton.dcButtonCenter = CGPointMake(250, 500);
+    _keeperButton.allowSounds = NO;
+    self.keeperButton.bloomDirection = kDCPathButtonBloomDirectionTop;
+    self.keeperButton.delegate = self;
+    
+    
+    DCPathItemButton *itemButton_1 = [[DCPathItemButton alloc]initWithImage:[UIImage imageNamed:@"gear"]
+                                                           highlightedImage:[UIImage imageNamed:@"gear"]
+                                                            backgroundImage:[UIImage imageNamed:@"gear"]
+                                                 backgroundHighlightedImage:[UIImage imageNamed:@"gear"]];
+    
+    DCPathItemButton *itemButton_2 = [[DCPathItemButton alloc]initWithImage:[UIImage imageNamed:@"exchange"]
+                                                           highlightedImage:[UIImage imageNamed:@"exchange"]
+                                                            backgroundImage:[UIImage imageNamed:@"exchange"]
+                                                 backgroundHighlightedImage:[UIImage imageNamed:@"exchange"]];
+    NSArray *elements = @[itemButton_1, itemButton_2];
+    [self.keeperButton addPathItems:elements];
+    [self.view addSubview:self.keeperButton];
+    
     
 }
+
+
+- (void)clearDB{
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Chose Action"
+                                                                             message:@"Beware! You will delete whole history of those"
+                                                                      preferredStyle:UIAlertControllerStyleActionSheet];
+    NSArray *names = @[@"All", @"Earning", @"Transaction"];
+    for ( NSInteger i = 0; i < names.count; i++){
+        MPAlertAction *actionBalance = [MPAlertAction actionWithTitle:names[i] style:UIAlertActionStyleDestructive handler:^(UIAlertAction *alert){
+            MPAlertAction *action = (id)alert;
+            if (action.index == 0){
+                [self removeAllEntities:nil];
+            }else{
+                [self executeBatchRequestWithEntityName:names[action.index]];
+            }
+            
+        }];
+        actionBalance.index = i;
+        [alertController addAction:actionBalance];
+    }
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
+    [alertController addAction:cancel];
+    [self presentViewController:alertController animated:YES completion:nil];
+    
+};
+
+
+- (void)removeAllEntities:(id)sender{
+        AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+        NSArray *stores = [delegate.coreDataBridge.persistentStoreCoordinator persistentStores];
+        NSURL *URL = [NSURL new];
+    
+        for(NSPersistentStore *store in stores) {
+            [delegate.coreDataBridge.persistentStoreCoordinator removePersistentStore:store error:nil];
+            [[NSFileManager defaultManager] removeItemAtPath:store.URL.path error:nil];
+            URL = store.URL;
+        }
+        if (![delegate.coreDataBridge.persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:URL options:nil error:nil]) {
+            // do something with the error
+            NSLog(@"Эта часть кода делетит все нах и создает новый персистент стор");
+        }
+    [self initDataSource];
+}
+
+- (void)executeBatchRequestWithEntityName:(NSString *)entityName{
+    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:entityName];
+    NSBatchDeleteRequest *delete = [[NSBatchDeleteRequest alloc] initWithFetchRequest:request];
+    NSError *deleteError = nil;
+    [delegate.coreDataBridge.persistentStoreCoordinator executeRequest:delete withContext:self.context error:&deleteError];
+    
+    [self initDataSource];
+}
+
 
 - (void)initBottomCollectionView{
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
@@ -231,6 +320,27 @@
     }
 }
 
+#pragma makr - DCPathButtonDelegate
+
+- (void)pathButton:(DCPathButton *)dcPathButton clickItemButtonAtIndex:(NSUInteger)itemButtonIndex{
+    
+}
+
+- (void)willPresentDCPathButtonItems:(DCPathButton *)dcPathButton{
+    
+}
+
+- (void)didPresentDCPathButtonItems:(DCPathButton *)dcPathButton{
+    
+}
+
+- (void)willDismissDCPathButtonItems:(DCPathButton *)dcPathButton{
+    
+}
+
+- (void)didDismissDCPathButtonItems:(DCPathButton *)dcPathButton{
+    
+}
 
 
 @end

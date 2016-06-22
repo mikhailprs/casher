@@ -205,6 +205,10 @@ Apache License
    See the License for the specific language governing permissions and
    limitations under the License.
 
+## DCPathButton
+
+The DCPathButton use the MIT license
+
 ## Masonry
 
 Copyright (c) 2011-2012 Masonry Team - https://github.com/Masonry

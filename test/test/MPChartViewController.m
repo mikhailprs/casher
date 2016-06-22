@@ -56,6 +56,16 @@
 #pragma mark - accessors
 
 - (void)setDataSource:(NSArray *)dataSource{
+    if(dataSource.count == 0){
+        _dataSource = nil;
+        self.pieChart.hideValues = YES;
+        NSArray *initItem = @[[PNPieChartDataItem dataItemWithValue:0 color:PNRed description:@"NO INFO"]];
+        [self.pieChart updateChartData:initItem];
+        [self.pieChart strokeChart];
+        [self updateStatisticView];
+        return;
+    }
+    self.pieChart.hideValues = NO;
     NSMutableArray *array = [NSMutableArray new];
     NSInteger types = [MPExtension getTransactionCount];
     for (int i = 0 ; i <= types; i++){
@@ -96,8 +106,10 @@
 - (void)createUI{
     _scrollView = [[UIScrollView alloc] init];
     [self.view addSubview:self.scrollView];
-    _pieChart = [[PNPieChart alloc] initWithFrame:CGRectMake(0, 0, 0, 0) items:nil];
+    NSArray *initItem = @[[PNPieChartDataItem dataItemWithValue:0 color:PNRed description:@"NO INFO"]];
+    _pieChart = [[PNPieChart alloc] initWithFrame:CGRectMake(0, 0, 0, 0) items:initItem];
     self.pieChart.labelPercentageCutoff = 0.05;
+    self.pieChart.hideValues = YES;
     [self.scrollView addSubview:_pieChart];
 
     _pieChart.delegate = self;
@@ -250,12 +262,16 @@
     [_pieChart updateChartData:items];
     [_pieChart strokeChart];
     [self addLegend];
+    [self updateStatisticView];
+
     
+}
+
+- (void)updateStatisticView{
     [self.products.value countFromCurrentValueTo:[self.dataSource[0] floatValue]];
     [self.sport.value countFromCurrentValueTo:[self.dataSource[1] floatValue]];
     [self.party.value countFromCurrentValueTo:[self.dataSource[2] floatValue]];
     [self.kartoha.value countFromCurrentValueTo:[self.dataSource[3] floatValue]];
-    
 }
 
 
@@ -271,6 +287,7 @@
 #pragma mark - delegate
 
 - (void)userClickedOnPieIndexItem:(NSInteger)pieIndex{
+    if(!_dataSource) return;
     id sum = _dataSource[pieIndex];
     if (![self.moveLabel isHidden]){
         [self.moveLabel swing:NULL];
