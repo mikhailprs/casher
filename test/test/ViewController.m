@@ -96,15 +96,15 @@
     self.keeperButton.delegate = self;
     
     
-    DCPathItemButton *itemButton_1 = [[DCPathItemButton alloc]initWithImage:[UIImage imageNamed:@"gear"]
-                                                           highlightedImage:[UIImage imageNamed:@"gear"]
-                                                            backgroundImage:[UIImage imageNamed:@"gear"]
-                                                 backgroundHighlightedImage:[UIImage imageNamed:@"gear"]];
+    DCPathItemButton *itemButton_1 = [[DCPathItemButton alloc]initWithImage:[UIImage imageNamed:@"plus"]
+                                                           highlightedImage:[UIImage imageNamed:@"plus"]
+                                                            backgroundImage:[UIImage imageNamed:@"plus"]
+                                                 backgroundHighlightedImage:[UIImage imageNamed:@"plus"]];
     
-    DCPathItemButton *itemButton_2 = [[DCPathItemButton alloc]initWithImage:[UIImage imageNamed:@"exchange"]
-                                                           highlightedImage:[UIImage imageNamed:@"exchange"]
-                                                            backgroundImage:[UIImage imageNamed:@"exchange"]
-                                                 backgroundHighlightedImage:[UIImage imageNamed:@"exchange"]];
+    DCPathItemButton *itemButton_2 = [[DCPathItemButton alloc]initWithImage:[UIImage imageNamed:@"plus"]
+                                                           highlightedImage:[UIImage imageNamed:@"plus"]
+                                                            backgroundImage:[UIImage imageNamed:@"plus"]
+                                                 backgroundHighlightedImage:[UIImage imageNamed:@"plus"]];
     
 
 
