@@ -17,12 +17,15 @@
 #import "Balance+CoreDataProperties.h"
 #import "NSDate+Formatter.h"
 #import "AppDelegate.h"
+#import "MPAlertAction.h"
+#import "MPTransactionsHistoryViewController.h"
+#import "MPButton.h"
 
-@interface MPAddingTransactViewController () <OPTKTransactionTypeSwitchesViewProtocol>
+@interface MPAddingTransactViewController () <OPTKTransactionTypeSwitchesViewProtocol, UITextFieldDelegate>
 
 @property (strong, nonatomic) NSManagedObjectContext *context;
 @property (strong, nonatomic) MPInputTextView *view_input;
-@property (strong, nonatomic) UIButton *btn_confirmTransaction;
+@property (strong, nonatomic) MPButton *btn_confirmTransaction;
 @property (strong, nonatomic) NSString *street;
 @property (strong, nonatomic) dispatch_queue_t queueSerial;
 @property (strong, nonatomic) MPTransTypeSwitcherView *view_typeSwitch;
@@ -86,10 +89,9 @@
 
 
 - (void)createTransactionButton{
-    _btn_confirmTransaction = [[UIButton alloc] init];
+    _btn_confirmTransaction = [[MPButton alloc] init];
     [self.view addSubview:self.btn_confirmTransaction];
     [self.btn_confirmTransaction setTitle:@"Transaction" forState:UIControlStateNormal];
-    self.btn_confirmTransaction.backgroundColor = [UIColor blackColor];
     [self.btn_confirmTransaction addTarget:self action:@selector(actionTransaction:) forControlEvents:UIControlEventTouchDown];
 }
 
@@ -112,7 +114,7 @@
     [self.view_input mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.equalTo(self.view).with.offset(0.f);
         make.top.equalTo(self.view.mas_top).with.offset(70.f);
-        make.height.equalTo(@(50.f));
+        make.height.equalTo(@(80.f));
     }];
 }
 - (void)makeTransTypeSwitchConstraints{
@@ -126,10 +128,10 @@
 
 - (void)makeTransactionButtonConstraints{
     [self.btn_confirmTransaction mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.view.mas_left).with.offset(50.f);
-        make.right.equalTo(self.view.mas_right).with.offset(-50.f);
+        make.left.equalTo(self.view.mas_left).with.offset(70.f);
+        make.right.equalTo(self.view.mas_right).with.offset(-70.f);
         make.top.equalTo(self.view_typeSwitch.mas_bottom).with.offset(10.f);
-        make.height.equalTo(@(25.f));
+        make.height.equalTo(@(50.f));
     }];
 }
 
@@ -140,7 +142,15 @@
 #pragma mark - IB action
 
 - (void)actionTransaction:(UIButton *)sender{
-    dispatch_async(self.queueSerial, ^{
+    if ([self.view_input.tf_amount.text isEqualToString:@""]){
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Field is empty" message:@"Try again" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *action = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
+        [alertController addAction:action];
+        [self.btn_confirmTransaction setHighlighted:NO];
+        [self presentViewController:alertController animated:YES completion:nil];
+        
+        return;
+    }
         Transaction *transaction = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([Transaction class]) inManagedObjectContext:self.context];
         transaction.trans_amount = [NSNumber numberWithDouble:[self.view_input.tf_amount.text doubleValue]];
         transaction.trans_time = [NSDate date];
@@ -170,9 +180,44 @@
         }
 
         [self.context save:nil];
-    });
     
-    NSLog(@"JEsus");
+    if (error){
+        NSLog(@"%@", [error localizedDescription]);
+    }else{
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Successful" message:@"Go to the next screen" preferredStyle:UIAlertControllerStyleAlert];
+        
+        
+        
+        void(^handlerActionController)(UIAlertAction *action) = ^(UIAlertAction *action){
+            MPAlertAction *actionType = (id)action;
+            [self didSelectedAtIndex:actionType.index];
+        };
+        
+        MPAlertAction *alertActionOK = [MPAlertAction actionWithTitle:@"Balance" style:UIAlertActionStyleDefault handler:handlerActionController];
+        alertActionOK.index = 0;
+        
+        MPAlertAction *alertActionNO = [MPAlertAction actionWithTitle:@"Transaction History" style:UIAlertActionStyleDefault handler:handlerActionController];
+        alertActionNO.index = 1;
+        
+        [alertController addAction:alertActionOK];
+        [alertController addAction:alertActionNO];
+        self.view_input.tf_amount.text = @"";
+        [self.view_input.tf_amount resignFirstResponder];
+        [self presentViewController: alertController animated:YES completion:nil];
+    }
+    
+}
+
+- (void) didSelectedAtIndex:(NSInteger)index{
+    __weak typeof (self) wSelf = self;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (index == 0){
+            [wSelf.navigationController popViewControllerAnimated:YES];
+        }else{
+            MPTransactionsHistoryViewController *vc = [MPTransactionsHistoryViewController new];
+            [wSelf.navigationController pushViewController:vc animated:YES];
+        }
+    });
 }
 
 

@@ -47,4 +47,13 @@
     [self setPrimitiveValue:amount forKey:@"amount"];
     [self didChangeValueForKey:@"amount"];
 }
+
+- (void)setKeeped:(NSNumber *)keeped{
+    [self willChangeValueForKey:@"keeped"];
+    NSNumber *currentAmount = [NSNumber numberWithFloat:([self.keeped floatValue] + [keeped floatValue])];
+    [self setPrimitiveValue:currentAmount forKey:@"keeped"];
+    [self didChangeValueForKey:@"keeped"];
+}
+
+
 @end

@@ -85,10 +85,12 @@
     
     UIImage *image = [UIImage imageNamed:@"plus"];
     UIImage *imageHighlited = [UIImage imageNamed:@"lightbulb"];
-    _keeperButton = [[DCPathButton alloc] initWithCenterImage:image highlightedImage:imageHighlited];
-    _keeperButton = [[DCPathButton alloc] initWithButtonFrame:CGRectMake(0, 0, 40, 40) centerImage:image highlightedImage:imageHighlited];
+    _keeperButton = [[DCPathButton alloc] initWithButtonFrame:CGRectZero centerImage:image highlightedImage:imageHighlited];
+
     self.keeperButton.bloomRadius = 100;
-    self.keeperButton.dcButtonCenter = CGPointMake(250, 500);
+    CGFloat xPos = self.view.frame.size.width / 2;
+    self.keeperButton.dcButtonCenter = CGPointMake(xPos , 370);
+    
     _keeperButton.allowSounds = NO;
     self.keeperButton.bloomDirection = kDCPathButtonBloomDirectionTop;
     self.keeperButton.delegate = self;
@@ -103,10 +105,13 @@
                                                            highlightedImage:[UIImage imageNamed:@"exchange"]
                                                             backgroundImage:[UIImage imageNamed:@"exchange"]
                                                  backgroundHighlightedImage:[UIImage imageNamed:@"exchange"]];
+    
+
+
     NSArray *elements = @[itemButton_1, itemButton_2];
     [self.keeperButton addPathItems:elements];
     [self.view addSubview:self.keeperButton];
-    
+
     
 }
 
@@ -323,22 +328,23 @@
 #pragma makr - DCPathButtonDelegate
 
 - (void)pathButton:(DCPathButton *)dcPathButton clickItemButtonAtIndex:(NSUInteger)itemButtonIndex{
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Balance"];
     
-}
-
-- (void)willPresentDCPathButtonItems:(DCPathButton *)dcPathButton{
-    
-}
-
-- (void)didPresentDCPathButtonItems:(DCPathButton *)dcPathButton{
-    
-}
-
-- (void)willDismissDCPathButtonItems:(DCPathButton *)dcPathButton{
-    
-}
-
-- (void)didDismissDCPathButtonItems:(DCPathButton *)dcPathButton{
+    NSError *error = nil;
+    NSArray *results = [self.context executeFetchRequest:request error:&error];
+    if (!results) {
+        NSLog(@"Error fetching Employee objects: %@\n%@", [error localizedDescription], [error userInfo]);
+        abort();
+    }
+    Balance *balance = [results firstObject];
+    double amount = [balance.amount doubleValue];
+    if (amount > 0){
+        balance.amount = 0;
+        balance.keeped = [NSNumber numberWithDouble:amount];
+    }
+    [self.context save:nil];
+    self.view_avialable.lbl_right.text = [NSString stringWithFormat:@"%.2f",[balance.amount doubleValue]];
+    self.view_keeped.lbl_right.text = [NSString stringWithFormat:@"%.2f",[balance.keeped doubleValue]];
     
 }
 
