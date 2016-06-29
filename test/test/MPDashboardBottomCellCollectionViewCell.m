@@ -63,7 +63,7 @@
 //            imageName = @"bottomCellOrders";
             break;}
         case OPTKBottomTypeCellPriceAlerts:{
-            textForLabel = @"NULL";
+            textForLabel = @"Timer";
 //            imageName = @"bottomCellPriceAlerts";
             break;}
         case OPTKBottomTypeCellPendingBonus:{

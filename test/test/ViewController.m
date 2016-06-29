@@ -22,7 +22,7 @@
 #import "MPChartViewController.h"
 #import "MPAlertAction.h"
 #import "DCPathButton.h"
-
+#import "MPCountdownViewController.h"
 
 
 @interface ViewController () <MPDashBoardBottomViewDelegate, DCPathButtonDelegate>
@@ -309,6 +309,8 @@
             break;}
         case OPTKBottomTypeCellPriceAlerts:{
              NSLog(@"%ld",(long)indexPath.row);
+            MPCountdownViewController *vc = [[MPCountdownViewController alloc] init];
+            [self.navigationController pushViewController:vc animated:NO];
 //            [self performSegueWithIdentifier:@"push_to_price_alerts_list" sender:collectionView];
             break;}
         case OPTKBottomTypeCellPendingBonus:{

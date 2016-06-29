@@ -28,6 +28,7 @@
 		546747191C7F2B5100113990 /* MPAddingTransactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 546747181C7F2B5100113990 /* MPAddingTransactViewController.m */; };
 		5478167C1D0ED7CA0035C64C /* NSManagedObjectContext+SRFetchAsync.m in Sources */ = {isa = PBXBuildFile; fileRef = 5478167B1D0ED7CA0035C64C /* NSManagedObjectContext+SRFetchAsync.m */; };
 		5480B10D1D23B25400BA7EF1 /* MPChartStatisticView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5480B10C1D23B25400BA7EF1 /* MPChartStatisticView.m */; };
+		5480B1111D23FA8600BA7EF1 /* MPCountdownViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5480B1101D23FA8600BA7EF1 /* MPCountdownViewController.m */; };
 		5B3697CE55845B46D6C6FD12 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D065C6BF2847E8AFC2DF5F87 /* libPods.a */; };
 		C21BAFC31CB9A88400E6DC20 /* NSDate+Formatter.m in Sources */ = {isa = PBXBuildFile; fileRef = C21BAFC21CB9A88400E6DC20 /* NSDate+Formatter.m */; };
 		C21BAFCC1CBA863600E6DC20 /* MPColorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C21BAFCB1CBA863600E6DC20 /* MPColorManager.m */; };
@@ -91,6 +92,8 @@
 		5478167B1D0ED7CA0035C64C /* NSManagedObjectContext+SRFetchAsync.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObjectContext+SRFetchAsync.m"; sourceTree = "<group>"; };
 		5480B10B1D23B25400BA7EF1 /* MPChartStatisticView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPChartStatisticView.h; sourceTree = "<group>"; };
 		5480B10C1D23B25400BA7EF1 /* MPChartStatisticView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPChartStatisticView.m; sourceTree = "<group>"; };
+		5480B10F1D23FA8600BA7EF1 /* MPCountdownViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPCountdownViewController.h; sourceTree = "<group>"; };
+		5480B1101D23FA8600BA7EF1 /* MPCountdownViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPCountdownViewController.m; sourceTree = "<group>"; };
 		6DA6664E7D2064BBB91E190C /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		8E5AFD792099C1CB57AAF077 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		92E6BF731A0708A84DDB3324 /* libPods-test.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-test.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -274,9 +277,19 @@
 			name = Views;
 			sourceTree = "<group>";
 		};
+		5480B10E1D23FA6900BA7EF1 /* CounterViewController */ = {
+			isa = PBXGroup;
+			children = (
+				5480B10F1D23FA8600BA7EF1 /* MPCountdownViewController.h */,
+				5480B1101D23FA8600BA7EF1 /* MPCountdownViewController.m */,
+			);
+			name = CounterViewController;
+			sourceTree = "<group>";
+		};
 		548496211CEEF4670075AC8F /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				5480B10E1D23FA6900BA7EF1 /* CounterViewController */,
 				545BE7C51CF3204400BEE93B /* ChartViewController */,
 				548496221CEEF4970075AC8F /* DashBoard */,
 				548496231CEEF4A50075AC8F /* EarningHistory */,
@@ -541,6 +554,7 @@
 				C29F89C31CA48A8D00350B16 /* MPAddingEarningViewController.m in Sources */,
 				C21BAFCF1CBA870100E6DC20 /* UIColor+HexColor.m in Sources */,
 				C28A69DD1C9D7BEF00A27814 /* Transaction.m in Sources */,
+				5480B1111D23FA8600BA7EF1 /* MPCountdownViewController.m in Sources */,
 				C21BAFC31CB9A88400E6DC20 /* NSDate+Formatter.m in Sources */,
 				544A83921C9172E30082275E /* MPTransTypeSwitcherView.m in Sources */,
 				C28A69DF1C9D7BEF00A27814 /* Balance.m in Sources */,
