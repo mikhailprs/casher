@@ -11,13 +11,12 @@
 @implementation MPExtension
 
 + (NSArray *)getTransactionTypes{
-    NSArray *array = [NSArray arrayWithObjects:@"Products",
-                      @"Sport",@"Party",@"Kartoha",nil];
+    NSArray *array = [NSArray arrayWithObjects:@"Food",@"Rest",@"Sport",@"Health",@"Education",@"Apartment",@"Equipment",@"Toys",@"Transport",@"Clothes",nil];
     return array;
 }
 
 + (NSInteger)getTransactionCount{
-    return 4;
+    return 10;
 }
 
 @end

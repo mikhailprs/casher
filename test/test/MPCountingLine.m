@@ -34,6 +34,7 @@
     _title.textAlignment = NSTextAlignmentLeft;
     _value = [[UICountingLabel alloc] initWithFrame:CGRectZero];
     _value.textAlignment = NSTextAlignmentRight;
+    _value.format = @"%.0f%";
     [self addSubview:self.title];
     [self addSubview:self.value];
     

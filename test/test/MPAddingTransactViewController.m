@@ -68,7 +68,7 @@
 #pragma mark - init methods
 
 - (void)initDefaultValues{
-    _transactionType = Products;
+    _transactionType = Food;
 }
 
 #pragma mark - init UI
@@ -99,6 +99,8 @@
     _view_typeSwitch = [[MPTransTypeSwitcherView alloc] init];
     _view_typeSwitch.leftLabel.text = @"Type:";
     _view_typeSwitch.typeSwitchesProtocol = self;
+    _view_typeSwitch.rigthLabel.textAlignment = NSTextAlignmentRight;
+    _view_typeSwitch.rigthLabel.textColor = [UIColor blueColor];
     [self.view addSubview:self.view_typeSwitch];
 }
 

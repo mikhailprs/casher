@@ -62,7 +62,10 @@
 - (void)makeUI{
     _rigthLabel = [[UILabel alloc] init];
     _leftLabel = [[UILabel alloc] init];
+    _rightLabel.textAlignment = NSTextAlignmentRight;
     _rigthLabel.userInteractionEnabled = YES;
+    self.rightLabel.textColor = [UIColor blueColor];
+    
     [self addSubview:self.rigthLabel];
     [self addSubview:self.leftLabel];
 }
@@ -81,7 +84,7 @@
         make.centerY.equalTo(self.mas_centerY).with.offset(0.);
         make.top.greaterThanOrEqualTo(self.mas_top).with.offset(2);
         make.bottom.lessThanOrEqualTo(self.mas_bottom).with.offset(-2);
-        make.width.equalTo(@(50.f));
+        make.width.equalTo(@(100.f));
     }];
 
 }

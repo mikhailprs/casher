@@ -9,10 +9,16 @@
 #import <Foundation/Foundation.h>
 
 typedef enum {
-    Products          = 0,
-    Sport           = 1,
-    Party           = 2,
-    Kartoha         = 3,
+    Food            = 0,
+    Rest            = 1,
+    Sport           = 2,
+    Health          = 3,
+    Education       = 4,
+    Apartment       = 5,
+    Equipment       = 6,
+    Toys            = 7,
+    Transport       = 8,
+    Сlothes         = 9,
 } MPTransactionType;
 
 @interface MPExtension : NSObject

@@ -18,23 +18,20 @@
 #import "UIView+DCAnimationKit.h"
 #import "MPCountingLine.h"
 #import "NSDate+Formatter.h"
+#import "MPChartStatisticView.h"
 
 @interface MPChartViewController () <PNChartDelegate>
-
 
 @property (strong, nonatomic) UIScrollView *scrollView;
 @property (strong, nonatomic) UISegmentedControl *segmentControl;
 @property (strong, nonatomic) PNPieChart *pieChart;
-@property (strong, nonatomic) MPCountingLine *products;
-@property (strong, nonatomic) MPCountingLine *sport;
-@property (strong, nonatomic) MPCountingLine *party;
-@property (strong, nonatomic) MPCountingLine *kartoha;
 @property (strong, nonatomic) UILabel *moveLabel;
 
 
 @property (strong, nonatomic) NSString *textTemplate;
 @property (strong, nonatomic) NSArray *dataSource;
 @property (strong, nonatomic) MPCalendarHelper *calendarHelper;
+@property (strong, nonatomic) MPChartStatisticView *chartStatisticView;
 @end
 
 
@@ -62,13 +59,13 @@
         NSArray *initItem = @[[PNPieChartDataItem dataItemWithValue:0 color:PNRed description:@"NO INFO"]];
         [self.pieChart updateChartData:initItem];
         [self.pieChart strokeChart];
-        [self updateStatisticView];
+        [self.chartStatisticView setDataSource:self.dataSource];
         return;
     }
     self.pieChart.hideValues = NO;
     NSMutableArray *array = [NSMutableArray new];
     NSInteger types = [MPExtension getTransactionCount];
-    for (int i = 0 ; i <= types; i++){
+    for (int i = 0 ; i < types; i++){
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"trans_type = %d",i];
         NSArray *data = [dataSource filteredArrayUsingPredicate:predicate];
         [array addObject:[data valueForKeyPath:@"@sum.trans_amount"]];
@@ -124,8 +121,9 @@
                             action:@selector(action:)
                   forControlEvents:UIControlEventValueChanged];
     [self.scrollView addSubview:self.segmentControl];
-    [self makeCountingStatisticView];
     [self createAnimationView];
+    [self makeCountingStatisticView];
+    
 
     
     
@@ -146,8 +144,8 @@
         make.centerX.equalTo(self.view);
         make.width.equalTo(self.view.mas_width);
         make.height.equalTo(@100.f);
-        make.top.equalTo(self.kartoha.mas_bottom);
-        make.bottom.equalTo(self.scrollView.mas_bottom).with.offset(-10);
+        make.top.equalTo(self.pieChart.mas_bottom).with.offset(40.f);
+//        make.bottom.equalTo(self.scrollView.mas_bottom).with.offset(-10);
 
     }];
     
@@ -160,9 +158,9 @@
     }];
     
     [self.segmentControl mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.scrollView.mas_top).with.offset(40.f);
+        make.top.equalTo(self.scrollView.mas_top).with.offset(20.f);
         make.centerX.equalTo(self.pieChart.mas_centerX);
-        make.height.equalTo(@40.);
+        make.height.equalTo(@35.);
         make.width.equalTo(@300.f);
     }];
     
@@ -182,7 +180,7 @@
     
     self.pieChart.legendFont = [UIFont fontWithName:@"Avenir-Medium" size:14.0];
     self.pieChart.legendStyle = PNLegendItemStyleSerial;
-    UIView *legend = [self.pieChart getLegendWithMaxWidth:self.pieChart.frame.size.width];
+    UIView *legend = [self.pieChart getLegendWithMaxWidth:self.pieChart.frame.size.width / 1.2];
     
     //Move legend to the desired position and add to view
     [legend setFrame:CGRectMake(0, 0, 0, 0)];
@@ -190,6 +188,7 @@
     
     [legend mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.pieChart.mas_left).with.offset(20.f);
+        make.right.equalTo(self.pieChart.mas_right).with.offset(-20.f);
         make.top.equalTo(self.pieChart.mas_bottom).with.offset(10.f);
     }];
 
@@ -197,46 +196,13 @@
 
 
 - (void)makeCountingStatisticView{
-    _products = [[MPCountingLine alloc] init];
-    self.products.title.text = @"Products";
-    self.products.value.format = @"%.0f%";
-    _sport = [[MPCountingLine alloc] init];
-    self.sport.title.text = @"Sport";
-    self.sport.value.format = @"%.0f%";
-    _party = [[MPCountingLine alloc] init];
-    self.party.title.text = @"Party";
-    self.party.value.format = @"%.0f%";
-    _kartoha = [[MPCountingLine alloc] init];
-    self.kartoha.title.text = @"Kartoha";
-    self.kartoha.value.format = @"%.0f%";
-    
-    [self.view addSubview:self.products];
-    [self.view addSubview:self.sport];
-    [self.view addSubview:self.party];
-    [self.view addSubview:self.kartoha];
-    
-    [self.products mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.equalTo(self.view);
-        make.height.equalTo(@30);
-        make.top.equalTo(self.pieChart.mas_bottom).with.offset(30.f);
-    }];
-    
-    [self.sport mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.equalTo(self.view);
-        make.height.equalTo(@30);
-        make.top.equalTo(self.products.mas_bottom).with.offset(10.f);
-    }];
-    
-    [self.party mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.equalTo(self.view);
-        make.height.equalTo(@30);
-        make.top.equalTo(self.sport.mas_bottom).with.offset(10.f);
-    }];
-    
-    [self.kartoha mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.equalTo(self.view);
-        make.height.equalTo(@30);
-        make.top.equalTo(self.party.mas_bottom).with.offset(10.f);
+    _chartStatisticView = [[MPChartStatisticView alloc] initWithDataSource:nil];
+    [self.scrollView addSubview:self.chartStatisticView];
+    [_chartStatisticView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.left.equalTo(self.view);
+        make.top.equalTo(self.moveLabel.mas_bottom).with.offset(-10.f);
+        make.height.equalTo(@405);
+        make.bottom.equalTo(self.scrollView.mas_bottom).with.offset(-10.f);
     }];
 }
 
@@ -254,26 +220,24 @@
 
 - (void)updateChartView{
     NSArray *description = [MPExtension getTransactionTypes];
-    NSArray *items = @[[PNPieChartDataItem dataItemWithValue:[self.dataSource[0] doubleValue] color:PNRed description:description[0]],
-                       [PNPieChartDataItem dataItemWithValue:[self.dataSource[1] doubleValue]  color:PNBlue description:description[1]],
+    NSArray *items = @[[PNPieChartDataItem dataItemWithValue:[self.dataSource[0] doubleValue] color:PNGrey description:description[0]],
+                       [PNPieChartDataItem dataItemWithValue:[self.dataSource[1] doubleValue]  color:PNLightBlue description:description[1]],
                        [PNPieChartDataItem dataItemWithValue:[self.dataSource[2] doubleValue] color:PNGreen description:description[2]],
-                       [PNPieChartDataItem dataItemWithValue:[self.dataSource[3] doubleValue] color:PNBrown description:description[3]]
+                       [PNPieChartDataItem dataItemWithValue:[self.dataSource[3] doubleValue] color:PNFreshGreen description:description[3]],
+                       [PNPieChartDataItem dataItemWithValue:[self.dataSource[4] doubleValue] color:PNDeepGreen description:description[4]],
+                       [PNPieChartDataItem dataItemWithValue:[self.dataSource[5] doubleValue] color:PNBrown description:description[5]],
+                       [PNPieChartDataItem dataItemWithValue:[self.dataSource[6] doubleValue] color:PNYellow description:description[6]],
+                       [PNPieChartDataItem dataItemWithValue:[self.dataSource[7] doubleValue] color:PNBlack description:description[7]],
+                       [PNPieChartDataItem dataItemWithValue:[self.dataSource[8] doubleValue] color:PNTwitterColor description:description[8]],
+                       [PNPieChartDataItem dataItemWithValue:[self.dataSource[9] doubleValue] color:PNWeiboColor description:description[9]],
                        ];
     [_pieChart updateChartData:items];
     [_pieChart strokeChart];
     [self addLegend];
-    [self updateStatisticView];
+    [self.chartStatisticView setDataSource:self.dataSource];
 
     
 }
-
-- (void)updateStatisticView{
-    [self.products.value countFromCurrentValueTo:[self.dataSource[0] floatValue]];
-    [self.sport.value countFromCurrentValueTo:[self.dataSource[1] floatValue]];
-    [self.party.value countFromCurrentValueTo:[self.dataSource[2] floatValue]];
-    [self.kartoha.value countFromCurrentValueTo:[self.dataSource[3] floatValue]];
-}
-
 
 
 - (void)action:(id)sender{

@@ -27,7 +27,7 @@
 
 @interface ViewController () <MPDashBoardBottomViewDelegate, DCPathButtonDelegate>
 
-@property (strong , nonatomic) NSManagedObjectContext *context;
+@property (strong, nonatomic) NSManagedObjectContext *context;
 @property (strong, nonatomic) DCPathButton *keeperButton;
 
 @end
