@@ -13,18 +13,23 @@
 #import "AppDelegate.h"
 #import "MPExtension.h"
 #import "Transaction+CoreDataProperties.h"
+#import "MPCountDownCell.h"
 
-@interface MPCountdownViewController ()
+@interface MPCountdownViewController () <UITableViewDataSource, UITableViewDelegate>
 
 
 @property (strong, nonatomic) MPStatisticView *lastEarnView;
 @property (strong, nonatomic) dispatch_source_t timer;
 @property (strong, nonatomic) NSDate *lastEarndate;
 @property (strong, nonatomic) NSArray *transactionsDate;
+@property (strong, nonatomic) UITableView *tableView;
 
 @end
 
 @implementation MPCountdownViewController
+
+static NSString *const cellearnHistoryIdentifier = @"simpleCellIdentifier";
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -98,6 +103,7 @@
     if (_lastEarndate){
         self.lastEarnView.lbl_right.text = [self formattedDate:self.lastEarndate];
     }
+    [self updateCells];
     
 }
 
@@ -112,6 +118,17 @@
         make.right.equalTo(self.view.mas_right).with.offset(-20.f);
         make.top.equalTo(self.view.mas_top).with.offset(70.);
         make.height.equalTo(@35.f);
+    }];
+    
+    _tableView = [[UITableView alloc] initWithFrame:CGRectZero];
+    [_tableView registerClass:[MPCountDownCell class] forCellReuseIdentifier:cellearnHistoryIdentifier];
+    [self.view addSubview:_tableView];
+    self.tableView.dataSource = self;
+    self.tableView.delegate = self;
+    
+    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.lastEarnView.mas_bottom).with.offset(10.f);
+        make.left.right.bottom.equalTo(self.view).with.offset(0.f);
     }];
 }
 
@@ -150,6 +167,7 @@
         return [obj1.trans_time compare:obj2.trans_time];
    }];
     _transactionsDate = [array copy];
+    [self.tableView reloadData];
 
 }
 
@@ -179,4 +197,36 @@
     }
     return time;
 }
+
+
+#pragma mark - UITableViewDataSource
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return _transactionsDate.count;
+}
+
+// Row display. Implementers should *always* try to reuse cells by setting each cell's reuseIdentifier and querying for available reusable cells with dequeueReusableCellWithIdentifier:
+// Cell gets various attributes set automatically based on table (separators) and data source (accessory views, editing controls)
+
+- (MPCountDownCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    MPCountDownCell *cell = [tableView dequeueReusableCellWithIdentifier:cellearnHistoryIdentifier
+                                                            forIndexPath:indexPath];
+
+    [self configureCell:cell atIndexPath:indexPath];
+
+    return cell;
+}
+
+- (void)updateCells{
+    NSArray *array = self.tableView.visibleCells;
+    [array enumerateObjectsUsingBlock:^(MPCountDownCell *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        obj.container.lbl_right.text = [self formattedDate:obj.dataSource.trans_time];
+    }];
+}
+
+- (void)configureCell:(MPCountDownCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+    Transaction *transaction = _transactionsDate[indexPath.row];
+    cell.dataSource = transaction;
+}
+
 @end

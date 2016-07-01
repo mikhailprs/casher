@@ -10,6 +10,7 @@
 		5438F1171D113CDA00766D17 /* MPCountingLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 5438F1161D113CDA00766D17 /* MPCountingLine.m */; };
 		5439AF221D0AFF47009F2D9F /* MPCalendarHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5439AF211D0AFF47009F2D9F /* MPCalendarHelper.m */; };
 		543A02851C80901800305903 /* MPStatisticView.m in Sources */ = {isa = PBXBuildFile; fileRef = 543A02841C80901800305903 /* MPStatisticView.m */; };
+		5442D4691D2689BB00B66FC5 /* MPCountDownCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5442D4681D2689BB00B66FC5 /* MPCountDownCell.m */; };
 		544A83921C9172E30082275E /* MPTransTypeSwitcherView.m in Sources */ = {isa = PBXBuildFile; fileRef = 544A83911C9172E30082275E /* MPTransTypeSwitcherView.m */; };
 		544A83951C91AAEE0082275E /* MPExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 544A83941C91AAEE0082275E /* MPExtension.m */; };
 		544A83991C91B4A90082275E /* MPTransactionHistoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 544A83971C91B4A90082275E /* MPTransactionHistoryCell.m */; };
@@ -59,6 +60,8 @@
 		5439AF211D0AFF47009F2D9F /* MPCalendarHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPCalendarHelper.m; sourceTree = "<group>"; };
 		543A02831C80901800305903 /* MPStatisticView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPStatisticView.h; sourceTree = "<group>"; };
 		543A02841C80901800305903 /* MPStatisticView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPStatisticView.m; sourceTree = "<group>"; };
+		5442D4671D2689BB00B66FC5 /* MPCountDownCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPCountDownCell.h; sourceTree = "<group>"; };
+		5442D4681D2689BB00B66FC5 /* MPCountDownCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPCountDownCell.m; sourceTree = "<group>"; };
 		544A838F1C9167810082275E /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		544A83901C9172E30082275E /* MPTransTypeSwitcherView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPTransTypeSwitcherView.h; sourceTree = "<group>"; };
 		544A83911C9172E30082275E /* MPTransTypeSwitcherView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPTransTypeSwitcherView.m; sourceTree = "<group>"; };
@@ -259,6 +262,8 @@
 				544A83971C91B4A90082275E /* MPTransactionHistoryCell.m */,
 				C2E76E731CA6BABB00C770E2 /* MPEarningHistoryCell.h */,
 				C2E76E741CA6BABB00C770E2 /* MPEarningHistoryCell.m */,
+				5442D4671D2689BB00B66FC5 /* MPCountDownCell.h */,
+				5442D4681D2689BB00B66FC5 /* MPCountDownCell.m */,
 			);
 			name = cells;
 			sourceTree = "<group>";
@@ -532,6 +537,7 @@
 				C28A69E31C9D7BEF00A27814 /* Earning.m in Sources */,
 				5438F1171D113CDA00766D17 /* MPCountingLine.m in Sources */,
 				546746E11C7EEF6B00113990 /* test.xcdatamodeld in Sources */,
+				5442D4691D2689BB00B66FC5 /* MPCountDownCell.m in Sources */,
 				C21BAFD51CBAD58B00E6DC20 /* MPAlertAction.m in Sources */,
 				C2E76E751CA6BABB00C770E2 /* MPEarningHistoryCell.m in Sources */,
 				5439AF221D0AFF47009F2D9F /* MPCalendarHelper.m in Sources */,

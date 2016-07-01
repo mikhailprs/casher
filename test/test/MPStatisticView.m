@@ -33,6 +33,8 @@
 
     _lbl_right = [[UILabel alloc] init];
     _lbl_right.textAlignment = NSTextAlignmentRight;
+    self.lbl_right.numberOfLines = 1;
+    self.lbl_right.adjustsFontSizeToFitWidth = YES;
     self.translatesAutoresizingMaskIntoConstraints = NO;
     UIView *leftSubview = [[UIView alloc] initWithFrame:CGRectZero];
     [leftSubview addSubview:self.lbl_left];
@@ -55,6 +57,7 @@
         make.width.equalTo(self.lbl_left.mas_width);
         make.right.greaterThanOrEqualTo(self.lbl_right.mas_left);
     }];
+    
     [rightSubview mas_makeConstraints:^(MASConstraintMaker *make){
         make.top.right.bottom.equalTo(self).with.offset(0.f);
         make.width.equalTo(self.lbl_right.mas_width);
